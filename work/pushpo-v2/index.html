@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#132a3b"><meta name="description" content="Pushpo: The Golden Return. Explore Mirpur, reveal hidden enemies, and face three villains in a supernatural browser game."><title>Pushpo — The Golden Return</title><link rel="stylesheet" href="style-v2.css"></head>
+<body><main id="arena" class="arena">
+ <canvas id="game" aria-label="Pushpo game. Move with WASD or arrows. E reveals enemies, Space attacks, Shift dodges, M opens the map."></canvas>
+ <div class="edge-shade"></div>
+ <div id="hud" class="hud hidden">
+  <div class="hero-hud"><div class="hero-portrait"><img src="assets/portrait.png" alt="Pushpo, age 18"></div><div class="hero-data"><div class="hero-name">PUSHPO <span id="health-text">100 / 100</span></div><div class="health-track"><div id="health-fill"></div></div></div></div>
+  <div class="timer-panel frame"><strong id="timer">15:00</strong><span id="chapter-time">CHAPTER 1 · BORROWED TIME</span></div>
+  <div class="score-panel frame"><span class="gold-star">★</span><strong id="score">0</strong><span>/ <b id="threshold">150</b></span></div>
+  <div class="quest frame"><span class="quest-icon">▤</span><div><strong id="objective-text">Find Sumon Mia</strong><small id="quest-detail">Reveal enemies to earn 150 points</small></div><span id="quest-lock">⌑</span></div>
+  <div id="boss-health" class="boss-health frame hidden"><span id="boss-name">SUMON MIA</span><div><i id="boss-fill"></i></div></div>
+  <div class="utilities"><button id="sound" title="Sound" aria-label="Turn sound on">♪</button><button id="pause" title="Pause (Esc)" aria-label="Pause game">Ⅱ</button><button id="fullscreen" title="Fullscreen" aria-label="Enter fullscreen">⛶</button></div>
+  <button id="map-open" class="minimap frame" aria-label="Open district map (M)"><canvas id="mini-map" width="155" height="155"></canvas><span>MIRPUR 10 <small>M ↗</small></span></button>
+  <div class="chapter-pips"><span id="pip-0" class="current">I</span><i></i><span id="pip-1">II</span><i></i><span id="pip-2">III</span></div>
+ </div>
+ <div id="message" class="game-message hidden" role="status" aria-live="polite"></div>
+ <div id="controls" class="controls hidden">
+  <div class="movement"><div id="joystick" class="joystick" role="group" aria-label="Touch movement joystick"><span class="arrow up">▲</span><span class="arrow left">◀</span><span class="arrow right">▶</span><span class="arrow down">▼</span><span id="stick"></span></div><small>WASD / ARROWS</small></div>
+  <div class="actions">
+   <button id="dodge" class="action dodge" aria-label="Dodge (Shift)"><span class="dash-symbol">↠</span><strong>DODGE</strong><small>SHIFT</small><span class="cooldown" id="dodge-cd"></span></button>
+   <button id="attack" class="action attack" aria-label="Attack (Space)"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 20 23 4l6-1-1 6-16 15M4 16l12 12M3 29l6-6"/></svg><strong>ATTACK</strong><small>SPACE</small></button>
+   <button id="sight" class="action sight" aria-label="Supernatural sight (E)"><svg viewBox="0 0 32 24" aria-hidden="true"><path d="M2 12Q16-5 30 12Q16 29 2 12Z"/><circle cx="16" cy="12" r="5"/></svg><strong>SIGHT</strong><small>E</small><span class="cooldown" id="sight-cd"></span></button>
+  </div>
+ </div>
+ <section id="start-screen" class="overlay start-screen">
+  <div class="intro-art"><div class="intro-halo"></div><img src="assets/portrait.png" alt="Pushpo"><div class="intro-title"><span>A SECOND LIFE. THREE NAMES.</span><h1>PUSHPO</h1><p>The Golden Return</p></div></div>
+  <div class="story-panel">
+   <span class="eyebrow">THE STORY SO FAR</span><h2>The river gave her <br>a second chance.</h2>
+   <p>At 18, Pushpo was abducted, sexually assaulted, and murdered by three men. Her body was thrown into the Padma River.</p>
+   <p>A golden boal fish shared its life force and brought her back—with fighting instincts and the power to sense danger and people who escaped justice.</p>
+   <p>Now she returns to Dhaka. Three names stand between her and the truth.</p>
+   <div class="villain-list"><div><span>I</span><strong>Sumon Mia</strong><small>150 POINTS</small></div><div><span>II</span><strong>Hafizur Rahman</strong><small>300 POINTS</small></div><div class="final-villain"><span>III</span><strong>Sohel Rana</strong><small>FINAL BOSS · 450 POINTS</small></div></div>
+   <div class="start-actions"><button id="start" class="gold-button" disabled><span id="start-label">Preparing Mirpur…</span><b>→</b></button><button id="help-toggle" class="help-button" aria-expanded="false" aria-controls="help-content">How to play</button></div>
+   <div id="help-content" class="help-content hidden"><p><b>WASD / arrows</b> move · <b>E</b> sight · <b>Space</b> attack · <b>Shift</b> dodge · <b>M</b> map. Touch controls are on screen.</p><p>Reveal enemies, then approach and strike. Dodge the attack circles. Murderer: <b>10 pts</b> · Rapist: <b>15 pts</b> · Snatcher: <b>5 pts</b>. Four regular enemies at a time.</p><p>Each chapter lasts <b>15 minutes</b>. Defeat its boss to begin the next chapter with renewed health and time. Death resets the run.</p></div>
+   <div class="intro-footer"><span>মিরপুর ১০ · DHAKA</span><span>15 MINUTES PER CHAPTER</span></div>
+  </div>
+ </section>
+ <section id="pause-screen" class="overlay modal-screen hidden"><div class="modal frame"><span class="eyebrow">TAKE A BREATH</span><h2>The city can wait.</h2><p>Your countdown is paused.</p><button id="resume" class="gold-button">Return to the streets <b>→</b></button><button id="restart-pause" class="help-button">Start a new randomized run</button></div></section>
+ <section id="map-screen" class="overlay modal-screen hidden"><div class="map-modal frame"><div class="map-heading"><div><span class="eyebrow">MIRPUR DISTRICT</span><h2>Know your streets.</h2></div><button id="map-close" aria-label="Close map">×</button></div><canvas id="large-map" width="650" height="650" aria-label="District road map, showing Pushpo and the active boss"></canvas><div class="map-legend"><span>● Pushpo</span><span>● Active boss</span><span>Countdown paused</span></div><p>Inspired by the supplied Mirpur 10 map; distances and buildings are adapted for play.</p></div></section>
+ <section id="end-screen" class="overlay modal-screen hidden"><div class="modal frame"><span id="end-kicker" class="eyebrow"></span><h2 id="end-title"></h2><p id="end-description"></p><div id="end-stats" class="end-stats"></div><button id="restart" class="gold-button">Return from the river <b>↻</b></button><small>Fresh time. New faces. New positions.</small></div></section>
+</main><script type="module" src="game-v2.mjs"></script></body></html>

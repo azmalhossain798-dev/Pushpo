@@ -1,0 +1,20 @@
+<!doctype html><meta charset="utf-8"><title>Pushpo motion review</title>
+<style>body{margin:0;background:#173544;color:#f9e7b7;font:16px system-ui}header{padding:18px}button{padding:10px;margin:5px}canvas{display:block;width:1200px;height:790px;max-width:100%}</style>
+<header>Character motion review <button id="walk">Walk / idle</button><button id="back">Front / back</button><button id="gesture">Talk / rest</button></header>
+<canvas width="1200" height="790" id="stage"></canvas>
+<script src="vendor/pixi-8.22.0.min.js"></script><script type="module">
+import {PixiPainter} from './pixi-renderer.mjs';
+const canvas=document.querySelector('canvas'),painter=new PixiPainter(canvas);await painter.ready;
+painter.app.renderer.resize(1200,790,Math.min(devicePixelRatio||1,2));
+let moving=true,back=false,gesture=false;
+document.querySelector('#walk').onclick=()=>moving=!moving;document.querySelector('#back').onclick=()=>back=!back;document.querySelector('#gesture').onclick=()=>gesture=!gesture;
+const names=['Pushpo','Murderer','Rapist','Snatcher','Civilian','Shopkeeper','Customer','Sumon Mia','Hafizur Rahman','Sohel Rana','Snatcher / olive','Snatcher / maroon','Homeless pedestrian'];
+let frameId=0;
+function frame(t){const c=painter.draw;c.beginFrame(1);c.layer('world');c.setTransform(1,0,0,1,0,0);c.fillStyle='#173544';c.fillRect(0,0,1200,790);
+ for(let i=0;i<names.length;i++){c.save();c.translate(120+(i%5)*240,205+Math.floor(i/5)*260);
+  const a={id:i,sprite:i<7?i:i-7,x:0,y:0,kind:i>=7&&i<10?'boss':i>=1&&i<=3||i===10||i===11?'enemy':'civilian',type:i>=1&&i<=3?i-1:i===10||i===11?2:-1,variant:i===10?1:i===11?2:0,homeless:i===12,known:true,sightRevealed:true,label:names[i],hp:100,maxHp:100,face:1,moving,walk:t*.01,gesture:gesture?.8:0,velocityX:back?-1:1,velocityY:0};
+  painter.actor(c,a,{player:{x:0,y:0}},t*.001,i===0);c.font='15px system-ui';c.textAlign='center';c.fillStyle='#f9e7b7';c.fillText(names[i],0,36);c.restore();
+ }c.endFrame();painter.app.render();frameId=requestAnimationFrame(frame);
+}frameId=requestAnimationFrame(frame);
+window.addEventListener('pagehide',()=>{cancelAnimationFrame(frameId);painter.destroy();},{once:true});
+</script>

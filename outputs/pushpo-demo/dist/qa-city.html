@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pushpo city verification</title>
+<style>body{margin:0;background:#132a3b;color:#ffedbd;font:14px system-ui;display:flex;flex-direction:column;height:100vh}header{padding:10px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}button{padding:8px}output{padding:0 12px 8px}main{flex:1;position:relative;min-height:0}canvas{width:100%;height:100%;position:absolute}</style></head><body>
+<header><strong>City verification</strong><button id="disguise">Disguised crowd</button><button id="sight">Use Sight</button><button id="combat">Enemy attack</button><button id="strike">Pushpo attack</button><button id="metro">Metro time jump (QA)</button><button id="homeless">Homeless interaction</button><button id="tour">Next district</button><button id="play">Pause simulation</button><button id="checks">Run city checks</button></header>
+<output id="result">Loading artwork…</output><main><canvas id="stage" aria-label="Live city and character rendering test"></canvas></main>
+<script src="vendor/pixi-8.22.0.min.js"></script><script type="module">
+import {PixiPainter} from './pixi-renderer.mjs';
+import {createRun,update,useSight,attack,inside,random,BOSSES,spawnBoss,objectivePosition} from './engine-v3.mjs';
+import {enemyIdentified,actorArtwork,updateMetro,createMetro,metroPosition,SNATCHER_TAUNT} from './city-systems.mjs';
+import {project,METRO_LINE,ROUNDABOUTS} from './scene-v3.mjs';
+const painter=new PixiPainter(document.querySelector('canvas')),output=document.querySelector('#result');await painter.ready;
+let game=createRun(4561),last=performance.now(),time=0,playing=true,frameId=0,tour=0;
+const status=value=>output.textContent=value;
+function focus(){const p=project(game.player.x,game.player.y);painter.camera={x:p.x,y:p.y-55};}
+function fresh(){game=createRun(4561);focus();}
+const resize=new ResizeObserver(()=>painter.resize());resize.observe(document.querySelector('main'));painter.resize();focus();
+status(`${painter.blockCount} buildings · ${painter.cityStats.roads} road sections · ${ROUNDABOUTS.length} roundabouts · ${game.actors.length} NPCs · ${game.actors.filter(a=>a.homeless).length} homeless`);
+function advance(seconds){for(let t=0;t<seconds;t+=.02)update(game,Math.min(.02,seconds-t));}
+document.querySelector('#disguise').onclick=()=>{
+ fresh();playing=false;document.querySelector('#play').textContent='Resume simulation';
+ const suspect=game.actors.find(a=>a.kind==='enemy');Object.assign(suspect,{type:1,sprite:6,speed:76,wanderSpeed:40,hp:150,maxHp:150,x:game.player.x+45,y:game.player.y,aggro:false,known:false,sightRevealed:false,dead:false});
+ const friends=game.actors.filter(a=>a.kind==='civilian'&&!a.activity).slice(0,2);friends.forEach((a,i)=>Object.assign(a,{sprite:6,x:game.player.x-50-i*40,y:game.player.y-20+i*45}));
+ status('Sight OFF: suspect is an ordinary visible pedestrian with the same artwork and blue marker as civilians.');
+};
+document.querySelector('#sight').onclick=()=>{game.player.sightCooldown=0;useSight(game);status('Sight ON: rapist identity revealed; civilians keep blue markers.');};
+document.querySelector('#combat').onclick=()=>{
+ fresh();playing=true;document.querySelector('#play').textContent='Pause simulation';game.elapsed=5;
+ const enemy=game.actors.find(a=>a.kind==='enemy');Object.assign(enemy,{type:2,variant:1,hp:70,maxHp:70,x:game.player.x+33,y:game.player.y,known:true,aggro:true,speed:105,cooldown:0});
+ status('Snatcher windup, strike animation and Bengali attack dialogue use the live combat simulation.');
+};
+document.querySelector('#strike').onclick=()=>{const before=game.player.hp;attack(game);advance(.12);status(`Pushpo arm strike · health before ${before}, now ${game.player.hp} · points ${game.points}`);};
+document.querySelector('#metro').onclick=()=>{
+ fresh();const m=game.metro;updateMetro(game,m.wait);
+ const distance=Math.hypot(METRO_LINE.to.x-METRO_LINE.from.x,METRO_LINE.to.y-METRO_LINE.from.y),extra=680/distance,p=(METRO_LINE.station+extra)/(1+2*extra);
+ const stop=METRO_LINE.travelSeconds*(m.direction>0?p:1-p);updateMetro(game,Math.max(0,stop-3));
+ game.player.x=METRO_LINE.from.x+(METRO_LINE.to.x-METRO_LINE.from.x)*METRO_LINE.station-100;game.player.y=METRO_LINE.from.y+(METRO_LINE.to.y-METRO_LINE.from.y)*METRO_LINE.station+100;
+ focus();playing=true;document.querySelector('#play').textContent='Pause simulation';status(`Real metro schedule advanced for QA: first arrival at ${m.lastStart.toFixed(1)}s; watch approach, 6s station dwell and departure.`);
+};
+document.querySelector('#homeless').onclick=()=>{
+ fresh();const a=game.actors.find(a=>a.homeless),b=game.actors.find(a=>a.kind==='civilian'&&!a.activity&&!a.homeless);
+ Object.assign(a,{x:game.player.x-25,y:game.player.y,askCooldown:0,wait:0});Object.assign(b,{x:game.player.x-55,y:game.player.y,wait:0});advance(.02);playing=false;document.querySelector('#play').textContent='Resume simulation';
+ status('One of 200 NPCs: '+a.speech+' · passerby replies: '+b.speech);
+};
+document.querySelector('#tour').onclick=()=>{
+ const points=[[1490,1740],[3830,1920],[2540,3910],[4270,3060],[1680,1210]];tour=(tour+1)%points.length;[game.player.x,game.player.y]=points[tour];focus();status('District '+(tour+1)+' · '+painter.blockCount+' buildings across expanded city');
+};
+document.querySelector('#play').onclick=()=>{playing=!playing;document.querySelector('#play').textContent=playing?'Pause simulation':'Resume simulation';};
+document.querySelector('#checks').onclick=()=>{
+ const results=[],check=(name,condition)=>{if(!condition)throw Error(name);results.push(name);};
+ try{
+  const g=createRun(555);check('200 NPCs',g.actors.length===200);check('0.5% homeless',g.actors.filter(a=>a.homeless).length/g.actors.length===.005);
+  check('all original activity roles',g.actors.filter(a=>a.activity).length===10);check('three roundabouts',ROUNDABOUTS.length===3);check('dense building layout',painter.blockCount>150);
+  for(const key of ['characters','buildings','bosses','props','backs','decor','people','city','street'])check(key+' atlas',painter.images[key]?.naturalWidth>0&&painter.cells[key]?.every(cell=>cell.w>0&&cell.h>0));
+  const suspect={id:90,kind:'enemy',type:1,sprite:6,x:g.player.x+30,y:g.player.y,hp:35,maxHp:150,known:false};g.actors=[suspect];
+  check('identity hidden',!enemyIdentified(suspect)&&objectivePosition(g)===null);check('civilian artwork',JSON.stringify(actorArtwork(suspect))===JSON.stringify(actorArtwork({...suspect,kind:'civilian'})));
+  useSight(g);check('Sight reveals',enemyIdentified(suspect));g.player.hp=41;attack(g);check('no kill healing',g.player.hp===41&&g.kills===1);check('arm animation triggered',g.player.attackTime>0);
+  const m={rng:random(18),events:[]};m.metro=createMetro(m.rng);check('first gap >=90s',m.metro.wait>=90);updateMetro(m,m.metro.wait+1);const p=metroPosition(m.metro);updateMetro(m,1);check('train moves',Math.hypot(metroPosition(m.metro).x-p.x,metroPosition(m.metro).y-p.y)>1);
+  updateMetro(m,METRO_LINE.travelSeconds+METRO_LINE.dwellSeconds-m.metro.travel);check('train exits',!m.metro.active);check('next gap >=90s',m.metro.wait>=90);
+  check('Pixi automatic ticker stopped',!painter.app.ticker.started);status('PASS '+results.length+' checks: '+results.join(' · '));
+ }catch(e){status('FAIL: '+e.message);console.error(e);}
+};
+function frame(now){const dt=Math.min(.06,(now-last)/1000);last=now;if(playing){update(game,dt);time+=dt;}painter.render(game,time,true);frameId=requestAnimationFrame(frame);}
+frameId=requestAnimationFrame(frame);
+window.addEventListener('pagehide',()=>{cancelAnimationFrame(frameId);resize.disconnect();painter.destroy();},{once:true});
+</script></body></html>

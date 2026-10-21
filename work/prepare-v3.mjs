@@ -1,0 +1,18 @@
+import fs from 'node:fs';
+const dir='outputs/pushpo-demo/dist/';
+const oldArt=fs.readFileSync(dir+'art-v2.mjs','utf8');
+const fish=oldArt.slice(oldArt.indexOf(' fish(c,'),oldArt.indexOf(' actor(c,'));
+const map=oldArt.slice(oldArt.indexOf(' map(canvas,'),oldArt.lastIndexOf('\n}'));
+let art=fs.readFileSync(dir+'art-v3.mjs','utf8');
+art=art.replace(' // Fish and north-up district map methods are shared below.',fish+'\n'+map);
+fs.writeFileSync(dir+'art-v3.mjs',art);
+let game=fs.readFileSync(dir+'game-v2.mjs','utf8').replaceAll('engine-v2','engine-v3').replaceAll('art-v2','art-v3');
+game="import {project,screenDirection} from './scene-v3.mjs';\n"+game;
+game=game.replace('painter.camera={x:game.player.x,y:game.player.y-90};','painter.camera=project(game.player.x,game.player.y);');
+game=game.replace('return{x,y};','return screenDirection(x,y);');
+game=game.replace("const r=$('game').getBoundingClientRect(),v=painter.view,x=(e.clientX-r.left)/v.scale+v.x-game.player.x,y=(e.clientY-r.top)/v.scale+v.y-game.player.y,d=Math.hypot(x,y)||1;","const r=$('game').getBoundingClientRect(),point=painter.screenToWorld(e.clientX-r.left,e.clientY-r.top),x=point.x-game.player.x,y=point.y-game.player.y,d=Math.hypot(x,y)||1;");
+fs.writeFileSync(dir+'game-v3.mjs',game);
+let html=fs.readFileSync(dir+'index.html','utf8').replaceAll('game-v2','game-v3');
+html=html.replace('<div class="intro-footer">','<p class="edition-note">Explore a living Mirpur: tea stalls, fruit sellers, and neighborhood conversations.</p><div class="intro-footer">');
+fs.writeFileSync(dir+'index.html',html);
+fs.writeFileSync(dir+'index-v3.html',html);

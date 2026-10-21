@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101e22">
+  <meta name="description" content="Play Pushpo: The Golden Return. A supernatural 2D action demo in the streets of Mirpur 10.">
+  <title>Pushpo — The Golden Return</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="app">
+  <header class="topbar">
+    <a class="wordmark" href="./" aria-label="Pushpo home"><span class="brand-mark">পু</span><span>PUSHPO<small>THE GOLDEN RETURN</small></span></a>
+    <div class="location"><span class="status-dot"></span>MIRPUR 10 <span class="divider">/</span> DHAKA AT DUSK</div>
+    <div class="top-actions"><button id="sound" class="icon-btn" aria-label="Turn sound on" title="Sound">♪<span id="sound-label">Sound off</span></button><button id="fullscreen" class="icon-btn" aria-label="Enter fullscreen" title="Fullscreen">⛶</button></div>
+  </header>
+  <section id="arena" class="arena" aria-label="Pushpo game">
+    <canvas id="game" aria-label="Top-down street game. Move with WASD or arrows, E for sight, Space to attack, Shift to dodge."></canvas>
+    <div class="vignette"></div>
+    <div id="hud" class="hud hidden">
+      <div class="player-card">
+        <div class="portrait">পু</div>
+        <div class="life"><div class="label-line"><strong>PUSHPO</strong><span id="health-text">100 / 100</span></div><div class="health-track"><div id="health-fill"></div></div><small>GOLDEN LIFE FORCE</small></div>
+      </div>
+      <div class="timer-card"><small>TIME REMAINING</small><strong id="timer">15:00</strong><span id="timer-caption">The river gave you one chance.</span></div>
+      <div class="score-card"><small>POINTS</small><div><strong id="score">0</strong><span> / 150</span></div><div class="score-track"><span id="score-fill"></span></div></div>
+      <div id="objective" class="objective"><span class="lock-icon">◇</span><span id="objective-text">Reveal targets. Earn 150 points to find Sumon Mia.</span><button id="pause" aria-label="Pause game" title="Pause (Esc)">Ⅱ</button></div>
+      <div id="boss-health" class="boss-health hidden"><span>SUMON MIA</span><div><i id="boss-fill"></i></div></div>
+    </div>
+    <div id="message" class="game-message hidden" role="status" aria-live="polite"></div>
+    <div id="controls" class="controls hidden">
+      <div class="movement"><div id="joystick" class="joystick" role="group" aria-label="Touch movement joystick"><div class="joy-guides"></div><span id="stick"></span></div><small>W A S D <span>/ ARROWS</span></small></div>
+      <div class="actions">
+        <button id="dodge" class="action dodge" aria-label="Dodge (Shift)"><span class="action-icon">↠</span><strong>DODGE</strong><small>SHIFT</small><span class="cooldown" id="dodge-cd"></span></button>
+        <button id="sight" class="action sight" aria-label="Supernatural sight (E)"><svg viewBox="0 0 32 24" aria-hidden="true"><path d="M2 12Q16-5 30 12Q16 29 2 12Z"/><circle cx="16" cy="12" r="5"/></svg><strong>SIGHT</strong><small>E</small><span class="cooldown" id="sight-cd"></span></button>
+        <button id="attack" class="action attack" aria-label="Attack (Space)"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="m7 17 13-14 5-1-1 5-14 13M4 14l10 10M3 25l5-5"/></svg><strong>ATTACK</strong><small>SPACE</small></button>
+      </div>
+    </div>
+    <div id="start-screen" class="overlay start-screen">
+      <div class="start-copy">
+        <span class="eyebrow"><i></i> A SUPERNATURAL RETURN</span>
+        <h1>PUSHPO</h1><p class="subtitle">The Golden Return</p>
+        <p class="story">The Padma gave you a second life.<br>Now the streets of Dhaka hold the answers.</p>
+        <div class="start-rule"></div>
+        <p class="start-description">Move through the crowd. Reveal hidden enemies.<br>Find Sumon Mia before your borrowed time runs out.</p>
+        <div class="start-facts"><span><strong>15</strong> MINUTES</span><span><strong>150</strong> POINTS</span><span><strong>1</strong> CHANCE</span></div>
+        <button id="start" class="primary-button" disabled><span id="start-label">Preparing Mirpur…</span><span>→</span></button>
+        <p class="start-note">A playable first-chapter demo · Headphones welcome</p>
+      </div>
+      <div class="field-guide">
+        <span class="eyebrow">YOUR GIFT FROM THE RIVER</span>
+        <h2>See what others cannot.</h2>
+        <p>Golden sight reveals nearby targets. A dark aura means a confirmed enemy. Blue diamonds mark civilians.</p>
+        <div class="guide-item"><span class="keycap">E</span><div><strong>Reveal the crowd</strong><small>Use supernatural sight to find targets.</small></div></div>
+        <div class="guide-item"><span class="keycap">SPACE</span><div><strong>Strike & survive</strong><small>Approach a revealed enemy. Hold to attack.</small></div></div>
+        <div class="guide-item"><span class="keycap">SHIFT</span><div><strong>Watch the warning</strong><small>Dodge out of the red attack circle.</small></div></div>
+        <p class="touch-tip">On a phone? Use the on-screen joystick and buttons.</p>
+      </div>
+      <div class="start-bottom"><span>মিরপুর ১০ · MIRPUR 10</span><span>CHAPTER 01 / THE FIRST NAME</span></div>
+    </div>
+    <div id="pause-screen" class="overlay modal-screen hidden">
+      <div class="modal"><span class="eyebrow">TAKE A BREATH</span><h2>The city can wait.</h2><p>Your countdown is paused.</p><button id="resume" class="primary-button">Return to the streets <span>→</span></button><button id="restart-pause" class="text-button">Start a new randomized run</button></div>
+    </div>
+    <div id="end-screen" class="overlay modal-screen hidden">
+      <div class="modal"><span id="end-kicker" class="eyebrow">THE GOLDEN RETURN</span><h2 id="end-title"></h2><p id="end-description"></p><div id="end-stats" class="end-stats"></div><button id="restart" class="primary-button">Begin a new run <span>↻</span></button><p class="start-note">New faces. New positions. A fresh 15 minutes.</p></div>
+    </div>
+  </section>
+  <footer class="bottom-bar"><span><i class="gold-dot"></i> CHAPTER 01 <span class="footer-dim">— THE FIRST NAME</span></span><span class="desktop-hint">WASD Move <b>·</b> E Sight <b>·</b> Space Attack <b>·</b> Shift Dodge <b>·</b> Esc Pause</span><span class="version">PLAYABLE DEMO</span></footer>
+</main>
+<script type="module" src="game.mjs"></script>
+</body>
+</html>

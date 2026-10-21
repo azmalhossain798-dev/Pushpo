@@ -1,0 +1,7 @@
+* text=auto
+*.png binary
+*.jpg binary
+*.wav binary
+*.mp3 binary
+*.webp binary
+*.tgz binary

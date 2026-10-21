@@ -1,0 +1,19 @@
+# Pushpo workspace — keeps Git light; generated/re-downloadable material is excluded.
+# Sizes at setup (2026-10-21): work/pixi-package ~73 MB, pixi.js tgz ~15 MB, pushpo-play.html ~19 MB.
+
+# Generated portable builds — regenerate with: node work/export-demo.mjs
+outputs/pushpo-play.html
+outputs/pushpo-demo/dist/offline.html
+
+# Vendored reference package + pinned tarball (re-downloadable; pinned 8.22.0, see dist/vendor/README.md)
+work/pixi-package/
+work/pixi.js-8.22.0.tgz
+
+# Forthcoming
+
+# Scratch working copies created by mutation tests (never the production simulation)
+work/pixi-mutation-check/
+
+# OS noise
+Thumbs.db
+Desktop.ini
