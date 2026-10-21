@@ -43,4 +43,4 @@ GPU antialiasing and text edges may differ slightly from Canvas. The fish and sw
 
 ## Publication status
 
-Local/downloadable only, confirmed by the user. The Sites identity in `.openai/hosting.json` is retained for any later publishing request.
+Live on Cloudflare Pages at https://pushpo.pages.dev (project `pushpo`, deployed from branch `main` out of `outputs/pushpo-demo/dist`; no build step). Every push to `origin/main` auto-deploys. The local/downloadable `pushpo-play.html` remains supplied alongside the live site. The Sites identity in `.openai/hosting.json` is retained but unused; hosting is Cloudflare, requested explicitly by the user on 2026-10-21.
