@@ -4,7 +4,7 @@ Written: 2026-10-21 | Status: game is STABLE, no work in progress | Working dir 
 
 ## If you are a new agent joining this workspace
 1. Read the workspace-root `AGENTS.md` and this file only. Open `.context/DECISIONS.md` if deciding something costly, `GLOSSARY.md` for terms, `.context/STATE.md` for the lighter current snapshot.
-2. There is NO Git repository. Baselines for comparison live in `work/pixi-migration-baseline/`.
+2. Baselines for comparison live in `work/pixi-migration-baseline/` (older: `work/city-v4-baseline/`). A local Git repo now exists at the workspace root (branch `main`, first commit `1e23a38`, 2026-10-21) — commit after each meaningful change; no remote is configured. Ignored/generated: `outputs/pushpo-play.html`, `dist/offline.html`, `work/pixi-package/`, `work/pixi.js-8.22.0.tgz`, `work/pixi-mutation-check/` (see `.gitignore`).
 3. Never invent a backlog or start a phase the user has not requested. The next phase is UNDECIDED (user choosing direction).
 
 ## Project one-liner

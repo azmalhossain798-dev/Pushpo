@@ -25,5 +25,5 @@ None.
 ## Known gotchas still relevant
 - WebGL required; static texture generation and UI maps still use Canvas 2D.
 - GPU glow/text are not pixel-identical; device/browser coverage limits are in the validation report.
-- Baseline copies: `work/pixi-migration-baseline/`; no Git repository exists here.
+- A local Git repo at the workspace root tracks this workspace (generated files ignored, see `.gitignore`); no remote. Baseline copies: `work/pixi-migration-baseline/`; older `work/city-v4-baseline/`.
 - Check preview processes/tabs each session; do not assume they survive.
