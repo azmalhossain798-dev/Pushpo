@@ -1,13 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {createRun,update,useSight,attack,spawnBoss,RULES,BOSSES,inside,route,objectivePosition,random} from '../dist/engine-v3.mjs';
+import {createRun,update,useSight,spawnBoss,RULES,BOSSES,inside,route,objectivePosition,random,continueStory} from '../dist/engine-v3.mjs';
+import {attack,finishStories,finishFinalEncounter} from './combat-helpers.mjs';
 import {ROUNDABOUTS,METRO_LINE,LANDMARKS,ACTIVITY_SPOTS} from '../dist/scene-v3.mjs';
+import {OPENING_STORY,AWAKENING_STORY} from '../dist/story-v8.mjs';
 import {CITY_POPULATION,SNATCHER_TAUNT,enemyIdentified,actorArtwork,createMetro,updateMetro,metroPosition} from '../dist/city-systems.mjs';
-test('200 NPCs preserve original activities and one roaming homeless resident makes 0.5 percent',()=>{
+test('180 NPCs preserve original activities and one roaming homeless resident remains approximately 0.5 percent',()=>{
  const g=createRun(700),homeless=g.actors.filter(a=>a.homeless);
- assert.equal(g.actors.length,CITY_POPULATION);assert.equal(homeless.length,1);assert.equal(homeless.length/g.actors.length,.005);
- assert.equal(g.actors.filter(a=>a.activity).length,ACTIVITY_SPOTS.length);
+ assert.equal(g.actors.length,CITY_POPULATION);assert.equal(homeless.length,1);assert(Math.abs(homeless.length/g.actors.length-.005)<.001);
+ assert.equal(g.actors.filter(a=>a.activity&&!a.stallId).length,ACTIVITY_SPOTS.length);
  assert(g.actors.some(a=>a.spotId==='tea-seller'));assert(g.actors.some(a=>a.spotId==='chat-a'));
  assert(homeless[0].resident);assert(!homeless[0].activity);assert(inside(homeless[0].x,homeless[0].y));
 });
@@ -19,28 +21,28 @@ test('expanded intersections and circular roads are connected and their islands 
 });
 test('rapist appearance, markers and objective stay civilian-like until Sight, including attempted auto-aggro',()=>{
  const g=createRun(701),a={id:1,kind:'enemy',type:1,sprite:6,x:g.player.x+40,y:g.player.y,hp:150,maxHp:150,speed:76,wanderSpeed:40,known:true,aggro:true,windup:0,cooldown:0,flash:0,wait:1};
- g.actors=[a];g.elapsed=10;assert(!enemyIdentified(a));assert.equal(objectivePosition(g),null);
+ g.actors=[a];g.elapsed=10;assert(!enemyIdentified(a,g));assert.equal(objectivePosition(g),null);
  for(const back of [false,true])assert.deepEqual(actorArtwork(a,back),actorArtwork({...a,kind:'civilian',type:-1},back));
  update(g,.02);assert(!a.aggro);assert(!a.windup);const hp=g.player.hp;attack(g);assert.equal(a.hp,150);assert.equal(g.player.hp,hp);
- assert(useSight(g));assert(enemyIdentified(a));assert(a.sightRevealed);assert(objectivePosition(g));
+ g.kills=5;assert(useSight(g));assert(enemyIdentified(a,g));assert(a.sightRevealed);assert(objectivePosition(g));
  g.player.attack=0;attack(g);assert.equal(a.hp,115);
- g.player.sight=0;assert(enemyIdentified(a),'Sight identification persists as in the existing game');
+ g.player.sight=0;assert(!enemyIdentified(a,g),'identity must conceal again after Sight');
 });
 test('regular kills and all boss kills never restore player health',()=>{
- const g=createRun(702);g.actors=[];g.player.hp=23;
+ const g=createRun(702);g.actors=[];g.player.hp=23;g.kills=5;g.player.sight=5;
  for(let type=0;type<3;type++){
   g.actors.push({id:type+20,kind:'enemy',type,known:true,sightRevealed:true,x:g.player.x+20,y:g.player.y,hp:35,maxHp:150});
-  g.player.attack=0;attack(g);assert.equal(g.player.hp,23);assert.equal(g.kills,type+1);
+  g.player.attack=0;attack(g);assert.equal(g.player.hp,23);assert.equal(g.kills,type+6);
  }
- for(let stage=0;stage<3;stage++){
+ for(let stage=0;stage<2;stage++){
   g.points=BOSSES[stage].threshold;spawnBoss(g);const b=g.actors.find(a=>a.kind==='boss'&&!a.dead);b.x=g.player.x+20;b.y=g.player.y;b.hp=35;
-  g.player.attack=0;attack(g);assert.equal(g.player.hp,23);if(stage<2)assert.equal(g.remaining,900);
- }assert.equal(g.status,'won');
+  g.player.attack=0;attack(g);assert.equal(g.player.hp,23);assert.equal(g.remaining,900);finishStories(g);
+ }finishFinalEncounter(g);assert.equal(g.player.hp,23);assert.equal(g.status,'won');
 });
 test('combat drives Pushpo and enemy arm animation phases and snatcher taunt verbatim',()=>{
  const g=createRun(703);g.actors=[{id:1,kind:'enemy',type:2,variant:1,known:true,x:g.player.x+35,y:g.player.y,hp:70,maxHp:70,speed:105,aggro:true,windup:0,cooldown:0,flash:0,wait:0}];
- attack(g);assert(g.player.attackTime>0);const first=g.player.attackTime;update(g,.02);assert(g.player.attackTime<first);
- const enemy=g.actors[0];assert(enemy.windup>0);assert.equal(enemy.speech,SNATCHER_TAUNT);assert.equal(SNATCHER_TAUNT,'এই শুয়োরের বাচ্চা, যা আছে দে কইলাম');
+ g.rng=()=>.99;attack(g);assert(g.player.attackTime>0);const first=g.player.attackTime;update(g,.02);assert(g.player.attackTime<first);
+ const enemy=g.actors[0];for(let i=0;i<50;i++)update(g,.02);assert(enemy.windup>0);assert.equal(enemy.speech,SNATCHER_TAUNT);assert.equal(SNATCHER_TAUNT,'এই শুয়োরের বাচ্চা, যা আছে দে কইলাম');
  enemy.windup=.01;update(g,.02);assert(enemy.attackTime>0);assert(g.player.hp<100);
 });
 test('metro moves, dwells at its real station, exits, and randomizes gaps of at least 90 seconds',()=>{
@@ -72,6 +74,6 @@ test('homeless NPC asks a nearby passerby, receives a reply and resumes roaming'
 test('opening summary matches the requested replacement exactly',()=>{
  const html=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');
  const summary=html.match(/<p id="story-summary">([^<]+)<\/p>/)[1];
- assert.equal(summary,'A mysterious golden fish shared its life force, bringing her back with fighting instincts and the power to sense danger and people who escaped justice, along with an altered appearance and identity.');
+ assert.equal(summary,OPENING_STORY);assert(html.includes(AWAKENING_STORY));assert(summary.includes('60 days'));
  assert(!html.includes('At 18, Pushpo was abducted'));assert(!html.includes('renewed health'));
 });

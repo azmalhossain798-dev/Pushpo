@@ -1,8 +1,8 @@
 // Every ground object uses the same 2:1 orthographic projection.
 export const ISO={x:.72,y:.36};
 export const CITY={width:4600,height:4800};
-export const ROUNDABOUTS=[{x:1660,y:1750,outer:196,inner:68},{x:3870,y:2110,outer:156,inner:47},{x:2470,y:4020,outer:168,inner:53}];
-export const METRO_LINE={from:{x:1430,y:120},to:{x:2450,y:4680},station:.27,travelSeconds:34,dwellSeconds:6,minGap:90,maxGap:165,elevation:96};
+export const ROUNDABOUTS=[{x:1660,y:1750,outer:238,inner:68,lanes:2},{x:3870,y:2110,outer:156,inner:47},{x:2470,y:4020,outer:168,inner:53}];
+export const METRO_LINE={from:{x:1430,y:120},to:{x:2450,y:4680},station:.27,travelSeconds:34,dwellSeconds:6,minGap:90,maxGap:165,elevation:136};
 export function project(x,y){return{x:(x-y)*ISO.x,y:(x+y)*ISO.y};}
 export function unproject(x,y){return{x:x/(2*ISO.x)+y/(2*ISO.y),y:y/(2*ISO.y)-x/(2*ISO.x)};}
 export function screenDirection(x,y){
@@ -10,36 +10,42 @@ export function screenDirection(x,y){
  return{x:p.x/d*s,y:p.y/d*s};
 }
 export const LANDMARKS=[
- {x:1250,y:1550,w:170,d:170,art:0,name:'Tea corner'},
- {x:2020,y:1545,w:190,d:185,art:1,name:'Pharmacy'},
- {x:2520,y:1630,w:185,d:185,art:3,name:'East bazaar'},
- {x:1360,y:2050,w:170,d:180,art:2,name:'Apartments'},
+ {x:1230,y:1259,w:170,d:100,art:0,name:'Tea corner'},
+ {x:1999,y:1232,w:190,d:120,art:1,name:'Pharmacy'},
+ {x:2493,y:1188,w:185,d:185,art:3,name:'East bazaar'},
+ {x:1416,y:2468,w:170,d:180,art:2,name:'Apartments'},
  {x:3630,y:1800,w:160,d:156,art:1,atlas:'city',name:'East junction pharmacy'},
  {x:4115,y:2350,w:170,d:156,art:0,atlas:'city',name:'Tea bazaar'},
- {x:2020,y:3650,w:174,d:170,art:3,atlas:'city',name:'South market'}
+ {x:1919,y:3677,w:174,d:170,art:3,atlas:'city',name:'South market'}
 ];
+export const FUCHKA_STALLS=Object.freeze([
+ {id:'mirpur-fuchka',name:'Mirpur Fuchka',x:1983,y:2018,vendor:{x:2028,y:1979},approach:{x:2074,y:1983}},
+ {id:'boundary-fuchka',name:'Boundary Fuchka',x:482,y:2533,vendor:{x:518,y:2485},approach:{x:512,y:2451}},
+ {id:'south-fuchka',name:'Kathaltola Fuchka',x:2857,y:3369,vendor:{x:2913,y:3345},approach:{x:2924,y:3313}}
+]);
 export const SCENERY=[
- {id:'tea',x:1245,y:1710,art:3,width:94,radius:25},
- {id:'fruit',x:1470,y:1880,art:2,width:136,radius:34},
- {id:'east-fruit',x:2650,y:1990,art:2,width:136,radius:34},
- {id:'rickshaw',x:1515,y:1570,art:1,width:125,radius:29},
- {id:'east-rickshaw',x:2285,y:1880,art:1,width:125,radius:29},
- {id:'bus',x:1610,y:1130,art:0,width:310,radius:51},
+ ...FUCHKA_STALLS.map(s=>({id:s.id,x:s.x,y:s.y,art:3,width:112,radius:22,fuchka:true})),
+ {id:'tea',x:1215,y:1557,art:3,width:94,radius:25},
+ {id:'fruit',x:1444,y:2009,art:2,width:136,radius:34},
+ {id:'east-fruit',x:2650,y:2110,art:2,width:136,radius:34},
+ {id:'rickshaw',x:1376,y:1533,art:1,width:125,radius:29},
+ {id:'east-rickshaw',x:2189,y:2046,art:1,width:125,radius:29},
+ {id:'bus',x:1812,y:1157,art:0,width:310,radius:51},
  {id:'south-tea',x:1240,y:2185,art:3,width:94,radius:25},
- {id:'pharmacy-cng',x:2210,y:1640,art:0,atlas:'street',width:132,radius:29},
+ {id:'pharmacy-cng',x:2120,y:1561,art:0,atlas:'street',width:132,radius:29},
  {id:'east-cng',x:3550,y:1975,art:0,atlas:'street',width:132,radius:29},
  {id:'south-stall',x:1800,y:4440,art:3,atlas:'street',width:155,radius:30},
  {id:'east-stall',x:3930,y:2750,art:3,atlas:'street',width:155,radius:30}
 ];
 export const ACTIVITY_SPOTS=[
- {id:'tea-seller',x:1215,y:1687,sprite:6,role:'shopkeeper',partner:'tea-buyer',lines:['Fresh cha!','One cup, coming up.'],prop:'tea'},
- {id:'tea-buyer',x:1290,y:1730,sprite:5,role:'customer',partner:'tea-seller',lines:['One cha, please.','Less sugar, bhai.']},
- {id:'fruit-seller',x:1440,y:1835,sprite:6,role:'vendor',partner:'fruit-buyer',lines:['Fresh mangoes!','Take a look!'],prop:'fruit'},
- {id:'fruit-buyer',x:1540,y:1855,sprite:4,role:'customer',partner:'fruit-seller',lines:['How much for these?','Half a kilo, please.']},
- {id:'chat-a',x:1125,y:1840,sprite:4,role:'conversation',partner:'chat-b',lines:['How is everyone?','See you tomorrow.']},
- {id:'chat-b',x:1190,y:1870,sprite:6,role:'conversation',partner:'chat-a',lines:['Doing well, thanks.','See you!']},
- {id:'east-vendor',x:2615,y:1945,sprite:5,role:'vendor',partner:'east-buyer',lines:['Sweet papaya!','Fresh this morning.'],prop:'east-fruit'},
- {id:'east-buyer',x:2720,y:1990,sprite:4,role:'customer',partner:'east-vendor',lines:['Two, please.','Thank you.']},
+ {id:'tea-seller',x:1170,y:1489,sprite:6,role:'shopkeeper',partner:'tea-buyer',lines:['Fresh cha!','One cup, coming up.'],prop:'tea'},
+ {id:'tea-buyer',x:1268,y:1585,sprite:5,role:'customer',partner:'tea-seller',lines:['One cha, please.','Less sugar, bhai.']},
+ {id:'fruit-seller',x:1414,y:1964,sprite:6,role:'vendor',partner:'fruit-buyer',lines:['Fresh mangoes!','Take a look!'],prop:'fruit'},
+ {id:'fruit-buyer',x:1522,y:1976,sprite:4,role:'customer',partner:'fruit-seller',lines:['How much for these?','Half a kilo, please.']},
+ {id:'chat-a',x:1171,y:1976,sprite:4,role:'conversation',partner:'chat-b',lines:['How is everyone?','See you tomorrow.']},
+ {id:'chat-b',x:1218,y:1974,sprite:6,role:'conversation',partner:'chat-a',lines:['Doing well, thanks.','See you!']},
+ {id:'east-vendor',x:2615,y:2065,sprite:5,role:'vendor',partner:'east-buyer',lines:['Sweet papaya!','Fresh this morning.'],prop:'east-fruit'},
+ {id:'east-buyer',x:2720,y:2110,sprite:4,role:'customer',partner:'east-vendor',lines:['Two, please.','Thank you.']},
  {id:'south-seller',x:1180,y:2235,sprite:6,role:'shopkeeper',partner:'south-buyer',lines:['Tea is ready.','Have a seat.'],prop:'south-tea'},
  {id:'south-buyer',x:1290,y:2240,sprite:5,role:'customer',partner:'south-seller',lines:['A cup, please.','Busy day today.']}
 ];

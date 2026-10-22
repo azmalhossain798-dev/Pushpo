@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {RULES,TYPES,WORLD,NODES,ROADS,BOSSES,createRun,inside,route,useSight,attack,dash,update,spawnBoss,currentBoss,formatTime} from '../dist/engine-v3.mjs';
+import {RULES,TYPES,WORLD,NODES,ROADS,BOSSES,createRun,inside,route,useSight,dash,update,spawnBoss,currentBoss,formatTime,continueStory} from '../dist/engine-v3.mjs';
+import {attack,finishStories,finishFinalEncounter} from './combat-helpers.mjs';
 test('larger district is connected, every boss location is accessible, and starts are randomized',()=>{
  assert(WORLD.width*WORLD.height>7*1672*941);
  for(const id of Object.keys(NODES))assert(route('n0',id).length>0,`No route to ${id}`);
@@ -12,26 +13,28 @@ test('larger district is connected, every boss location is accessible, and start
 test('types preserve their distinct health and points',()=>{
  assert.deepEqual(TYPES.map(t=>[t.label,t.health,t.points]),[['Murderer',100,10],['Rapist',150,15],['Snatcher',70,5]]);
  for(let i=0;i<3;i++){
-  const g=createRun(i+3);g.actors=[{id:77,x:g.player.x+30,y:g.player.y,kind:'enemy',type:i,known:true,sightRevealed:true,hp:35,maxHp:TYPES[i].health,dead:false}];
-  attack(g);assert.equal(g.points,TYPES[i].points);assert.equal(g.kills,1);
+  const g=createRun(i+3);g.kills=5;g.player.sight=5;g.actors=[{id:77,x:g.player.x+30,y:g.player.y,kind:'enemy',type:i,known:true,sightRevealed:true,hp:35,maxHp:TYPES[i].health,dead:false}];
+  attack(g);assert.equal(g.points,TYPES[i].points);assert.equal(g.kills,6);
  }
 });
 test('sight identifies nearby targets, never damages civilians, respects cooldown and walls',()=>{
- const g=createRun(9);g.actors=[{id:1,kind:'civilian',x:g.player.x+20,y:g.player.y,hp:100},{id:2,kind:'enemy',type:0,x:g.player.x+45,y:g.player.y,hp:100}];
- attack(g);assert.equal(g.actors[1].hp,100);g.player.attack=0;
- assert(useSight(g));assert(g.actors.every(a=>a.known));assert(!useSight(g));attack(g);assert.equal(g.actors[0].hp,100);assert.equal(g.actors[1].hp,65);
+ const g=createRun(9);g.spawnClock=999;g.actors=[{id:1,kind:'civilian',x:g.player.x+20,y:g.player.y,hp:100},{id:2,kind:'enemy',type:0,x:g.player.x+45,y:g.player.y,hp:100}];
+ attack(g);assert.equal(g.actors[1].hp,65);g.actors[1].hp=100;g.player.attack=0;
+ g.kills=5;assert(useSight(g));assert(!g.actors[0].sightRevealed&&g.actors[1].sightRevealed);assert(!useSight(g));attack(g);assert.equal(g.actors[0].hp,100);assert(!g.actors[0].specialSlapped);assert(!g.actors[0].fleeTime);assert.equal(g.actors[1].hp,65);
 });
-test('bosses unlock in order at cumulative thresholds and only the final boss wins',()=>{
- const g=createRun(11);g.actors=[];
- for(let stage=0;stage<3;stage++){
+test('first bosses unlock at cumulative thresholds and the final group plus farewell wins',()=>{
+ const g=createRun(11);g.actors=[];g.kills=5;g.player.sight=5;
+ for(let stage=0;stage<2;stage++){
   assert.equal(g.chapter,stage);g.points=BOSSES[stage].threshold-15;
   g.actors.push({id:70+stage,kind:'enemy',type:1,known:true,sightRevealed:true,x:g.player.x+25,y:g.player.y,hp:35,maxHp:150});
-  g.player.attack=0;attack(g);
+  g.player.attack=0;g.player.sight=5;attack(g);
   assert.equal(g.phase,'boss');assert.equal(g.points,BOSSES[stage].threshold);
   const b=g.actors.find(a=>a.kind==='boss'&&!a.dead);assert.equal(b.label,BOSSES[stage].name);assert.equal(b.hp,BOSSES[stage].hp);
   g.remaining=60;g.player.hp=20;b.x=g.player.x+30;b.y=g.player.y;b.hp=35;g.player.attack=0;attack(g);
   if(stage<2){assert.equal(g.status,'playing');assert.equal(g.remaining,900);assert.equal(g.player.hp,20);}
+  finishStories(g);
  }
+ finishFinalEncounter(g);
  assert.equal(g.status,'won');assert.deepEqual(g.defeated,BOSSES.map(b=>b.name));
 });
 test('replenishment never exceeds four regular enemies or two simultaneous attackers',()=>{

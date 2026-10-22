@@ -1,9 +1,12 @@
 import {METRO_LINE} from './scene-v3.mjs';
-export const CITY_POPULATION=200;
+export const CITY_POPULATION=180;
 export const SNATCHER_TAUNT='এই শুয়োরের বাচ্চা, যা আছে দে কইলাম';
-export function enemyIdentified(a){return a.kind==='boss'||a.kind==='enemy'&&(a.type===1?!!a.sightRevealed:!!(a.known||a.aggro));}
-export function actorArtwork(a,back=false){
+export function enemyIdentified(a,g){return !!g&&g.kills>=5&&g.player.sight>0&&!a.dead&&['enemy','boss'].includes(a.kind)&&Math.hypot(a.x-g.player.x,a.y-g.player.y)<580;}
+export function actorArtwork(a,back=false,identified=false){
+ if(a.role==='hercules')return {key:'hercules',index:back?1:0};
+ if(a.finalRole==='companion')return {key:'companions',index:(a.variant-1)+(back?2:0)};
  if(a.homeless)return {key:'people',index:3+(back?4:0)};
+ if(a.kind==='enemy'&&!identified)return {key:back?'backs':'characters',index:a.coverSprite??(a.type===1?a.sprite:1)};
  if(a.kind==='enemy'&&a.type===2)return {key:'people',index:(a.variant??0)%3+(back?4:0)};
  if(a.kind==='boss')return {key:back?'backs':'bosses',index:a.sprite+(back?7:0)};
  return {key:back?'backs':'characters',index:a.sprite??0};
@@ -37,17 +40,25 @@ export function updateMetro(g,elapsed){
  }
 }
 export function separateCrowd(actors,moveActor){
- const buckets=new Map(),cell=42;
- for(const a of actors){if(a.dead)continue;const key=`${Math.floor(a.x/cell)},${Math.floor(a.y/cell)}`;
+ const visible=actors.filter(a=>!a.dead&&!a.insideHouse&&!['entering','exiting'].includes(a.homePhase)),cell=40;
+ for(let pass=0;pass<4;pass++){const buckets=new Map();
+ for(const a of visible){const key=`${Math.floor(a.x/cell)},${Math.floor(a.y/cell)}`;
   const group=buckets.get(key);if(group)group.push(a);else buckets.set(key,[a]);
  }
- for(const a of actors){if(a.dead)continue;const gx=Math.floor(a.x/cell),gy=Math.floor(a.y/cell);
+ for(const a of visible){const gx=Math.floor(a.x/cell),gy=Math.floor(a.y/cell);
   for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++)for(const b of buckets.get(`${gx+dx},${gy+dy}`)??[]){
    if(b.id<=a.id)continue;const distance=Math.hypot(a.x-b.x,a.y-b.y);
-   if(distance>0&&distance<30){const push=(30-distance)*.06;
-    if(!a.activity)moveActor(a,(a.x-b.x)/distance*push,(a.y-b.y)/distance*push);
-    if(!b.activity)moveActor(b,(b.x-a.x)/distance*push,(b.y-a.y)/distance*push);
+   if(distance<28){const angle=(a.id*2.4+b.id)*.9,ux=distance?(a.x-b.x)/distance:Math.cos(angle),uy=distance?(a.y-b.y)/distance:Math.sin(angle),push=(28-distance+.05)*(a.activity||b.activity?1:.5);
+    if(!a.activity)moveActor(a,ux*push,uy*push);
+    if(!b.activity)moveActor(b,-ux*push,-uy*push);
    }
   }
+ }}
+}
+export function crowdNeighbors(actors,player){
+ const people=[{...player,id:0},...actors.filter(a=>!a.dead&&!a.insideHouse&&!['entering','exiting'].includes(a.homePhase))],buckets=new Map(),cell=64;
+ for(const a of people){const key=`${Math.floor(a.x/cell)},${Math.floor(a.y/cell)}`;if(!buckets.has(key))buckets.set(key,[]);buckets.get(key).push(a);}
+ for(const a of actors){const x=Math.floor(a.x/cell),y=Math.floor(a.y/cell),near=[];
+  for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++)for(const b of buckets.get(`${x+dx},${y+dy}`)??[])if(b.id!==a.id&&Math.hypot(a.x-b.x,a.y-b.y)<58)near.push({id:b.id,x:b.x,y:b.y});a.nearby=near;
  }
 }

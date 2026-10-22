@@ -1,0 +1,428 @@
+✔ only the two requested boulevards widen, with four usable 90-unit lanes and a wider central ring (2.2684ms)
+✔ baked paint separates the four lanes and directions and stops before cross streets and roundabout rings (111.8897ms)
+✔ rickshaw paths use the outer lane and wide-road stop lines keep minor approaches out of the main carriageway (1.3726ms)
+✔ curb assets, shopkeepers, buildings and utility sites clear the widened lanes without losing authored roles (183.2426ms)
+✔ 180 NPCs preserve original activities and one roaming homeless resident remains approximately 0.5 percent (171.969ms)
+✔ expanded intersections and circular roads are connected and their islands are solid (0.7805ms)
+✖ rapist appearance, markers and objective stay civilian-like until Sight, including attempted auto-aggro (24.7467ms)
+✖ regular kills and all boss kills never restore player health (18.3173ms)
+✔ combat drives Pushpo and enemy arm animation phases and snatcher taunt verbatim (42.3837ms)
+✔ metro moves, dwells at its real station, exits, and randomizes gaps of at least 90 seconds (0.6559ms)
+✔ pause freezes metro and restarting creates a fresh random schedule (4.6139ms)
+✔ homeless NPC asks a nearby passerby, receives a reply and resumes roaming (251.2342ms)
+✔ opening summary matches the requested replacement exactly (1.2656ms)
+✔ slap, face punch and kick hit exactly once at contact and cause distinct poses and reactions (159.2512ms)
+✔ combo advances only for accepted clicks; invalid, paused, story and expired actions cannot fire (7.7507ms)
+✔ contact rechecks moving targets, defeated targets, range and solid obstructions (6.4342ms)
+✔ Sight is locked through four actual defeats and unlocks on the fifth, with a single notice and no free points (4.7693ms)
+✖ tutorial guides a nearby snatcher between 10 and 15 seconds and preserves playable enemy counts (3198.0724ms)
+✔ snatchers survive nonlethal hits, randomly flee with added dialogue and keep their existing attack taunt (22.312ms)
+✔ murderer lines are randomized once per actor and do not restart in the same encounter (44.985ms)
+✔ two special civilians taunt once, accept one nonlethal slap and flee without points or kills (16.3995ms)
+✖ Water Mirror unlocks only after Sumon, blocks gun/weapon/grab contacts and shares a ten-second cooldown (12.0739ms)
+✔ Sumon defeat enables Mirror without skipping his existing notes, and restart relocks both abilities (4.2925ms)
+✖ live murderer gun windup aims at Pushpo, can miss, and triggers one Mirror cast for simultaneous contacts (6.2859ms)
+✔ fleeing follows existing traffic colliders and returns to ordinary navigation without attacking (385.5536ms)
+✔ post-unlock replenishment introduces a disguised rapist without replacing existing actors (2.2134ms)
+✔ combat markup starts with two attacks, hidden locked abilities, and preserved dodge and movement (0.5989ms)
+✔ larger district is connected, every boss location is accessible, and starts are randomized (178.4267ms)
+✖ types preserve their distinct health and points (30.4322ms)
+✖ sight identifies nearby targets, never damages civilians, respects cooldown and walls (10.7949ms)
+✖ first bosses unlock at cumulative thresholds and the final group plus farewell wins (9.1031ms)
+✔ replenishment never exceeds four regular enemies or two simultaneous attackers (6.4983ms)
+✔ timer begins at 15 minutes, pauses, times out, and resets with a new run (5.4066ms)
+✔ movement collides with buildings and the roundabout; dash grants invulnerability (776.8446ms)
+✔ lethal attack ends the run and bosses do not duplicate (9.0335ms)
+✔ every building facade lands on the isometric footprint, with upright walls and consistent storey scale (1.1782ms)
+✔ seeded roadside litter stays at the curb rather than the driving lane and includes six kinds (18.0803ms)
+✔ all landmark footprints clear the road and sidewalk plane (1.1913ms)
+✔ rickshaws spawn clear of people and each other, follow connected lanes and select eight directional views (161.282ms)
+✔ six minutes of traffic completes turns without overlaps, stuck junctions or leaving walkable roads (2928.9075ms)
+✔ traffic brakes for a crossing pedestrian and resumes after the crossing clears without health damage (2.8679ms)
+✔ traffic pauses with the run and a restart resets its seeded movement (6.2213ms)
+✔ walking NPCs share traffic collision rules and remain clear of rickshaw bodies (4177.3022ms)
+✔ a pedestrian passes a stopped rickshaw facing towards them rather than orbiting its front collider (18.4043ms)
+✔ a queue of NPCs clears a stopped rickshaw without a permanent crowd jam (139.82ms)
+✔ NPCs bypass a road waypoint occupied by a stopped rickshaw instead of queuing on its collider (18.3257ms)
+✔ three minutes of city walking does not accumulate a permanent rickshaw crowd jam (18154.6725ms)
+✖ actual boss story order leads to investigation, a physical journey, and exactly one three-enemy ambush (244.2222ms)
+✔ 60-second arrival clock pauses, does not reset on leaving, and expiry kills Hercules exactly once (201.3913ms)
+✔ Hercules freeze immobilizes multiple enemies for three seconds and uses one twelve-second cooldown (64.8882ms)
+✖ Hercules alternates contact attacks, changes dead targets, guards, takes damage and never uses a weapon (139.0035ms)
+✔ all three enemies are required; Sohel alone cannot win; Bengali farewell is reader-paced and ends once (57.8244ms)
+✔ the full 700-health group is defeatable through normal alternating player strikes (61.4389ms)
+✖ Hercules can fall in the joined fight and restarting clears all final mission state (55.1118ms)
+✔ Pushpo can reach the rescue on foot through connected roads within sixty seconds (98.0292ms)
+✔ rescue is viable with the full retained crowd and moving traffic; Hercules survives the whole arrival window (26615.9894ms)
+✔ final HUD and subtitle presenter share existing responsive UI and Bengali farewell action (0.8316ms)
+✔ Pixi transforms keep the ground, camera and inverse pointer on the same gameplay plane (1.319ms)
+✔ sprite rotation and facing flips keep cutout pivots fixed (0.2012ms)
+✔ resizing preserves CSS scale and caps DPR without zero-sized GPU buffers (0.8092ms)
+✔ attacks cannot pass through a solid street prop even inside melee range (192.1722ms)
+✔ movement is screen-relative and the original long-frame clock rule is retained (3.1002ms)
+✖ Sumon verdict and reflection are ordered, one-shot, and freeze combat, countdown and metro until dismissed (194.7867ms)
+✖ Bengali story strings retain the requested exact text (0.5953ms)
+✖ rapist approach dialogue stays hidden before Sight and speaks once per encounter with a distant reset (6.8351ms)
+✔ home visits preserve NPC identities, reserve doors, fade inside and wait for a clear exit (3.2924ms)
+✔ engine routes home visitors through a complete visit without vehicle or visible NPC overlap (863.9908ms)
+✔ crowd separation resolves exact overlap and keeps anchored activities fixed (0.7621ms)
+✔ opposing pedestrian streams pass each other with body spacing instead of a head-on deadlock (118.4764ms)
+✔ utility sites have logical world and screen spacing and asphalt contains seeded aggregate (6.7925ms)
+✔ projection is invertible and controls follow screen directions (1.6624ms)
+✔ activity actors and scenery start in valid positions (162.4293ms)
+✔ vendors stay with stalls, conversation partners talk, and customers step aside (2722.7201ms)
+✔ walking phase advances only with movement and stops at rest (2.9791ms)
+✔ opening establishes the unknown fish, apartment awakening and 60-day narrative deadline without a day simulation (189.4613ms)
+✔ Sumon preserves both existing beats, unlocks Mirror and announces the ten-second cooldown exactly once (5.7378ms)
+✔ Hafizur note precedes a physical corner approach and the one-time Hercules conversation, freezing unsafe input and countdown (14.328ms)
+✔ the approach works among retained crowds and rickshaws, and keeps feet on the street plane (479.567ms)
+✔ Bengali dialogue preserves all seven turns and every paragraph, including Anu, DNA, the river and the offer to help (0.2822ms)
+✔ the shared subtitle presenter exposes readable speaker text and portraits, and ends with investigation rather than a final mission (0.3466ms)
+✔ Hercules hunts his own targets, leaves the exact pocket note once per kill and grants no player rewards (330.6697ms)
+✖ Hercules is an ally; player intervention in a revealed private case uses normal combat credit without fabricating a Hercules note (16.098ms)
+✔ independent hunts continue in the populated district without exceeding the regular-enemy cap or ignoring rickshaw colliders (16732.8416ms)
+✔ Sohel Rana stays unavailable from score alone; the investigation interlude has no chapter countdown (9.1578ms)
+✔ Hercules front/rear sprites use the generated reference-based RGBA atlas and keep his defining identity (2.7568ms)
+✔ three accessible curb stalls retain the population, all old NPC activities, and protected individual vendors (156.9196ms)
+✔ every individual shop heals exactly twenty percent of maximum once, with correct feedback and no kill/score/timer changes (11.4262ms)
+✔ recovery uses maximum rather than current health, clamps without overflow, and saves the meal at full health (10.7638ms)
+✔ interaction rejects distant/walled, missing, paused, story, cinematic, dead and active-strike requests (30.7419ms)
+✔ day and night repeat in 210-second phases with continuous dusk/dawn and distinct sky/ambient/sunlight (4.1088ms)
+✔ cycle follows the existing paused game clock without touching chapter or rescue timers and stalls work in all phases (58.5545ms)
+✔ increased six-kind litter is deterministic, static, outside traffic lanes and away from stall entrances (20.3347ms)
+✔ night lighting is bounded to visible sources, preserves its context, and keeps fixed gradient colors (0.8463ms)
+✔ Hercules navigates around a stall using connected roads rather than chasing across a non-walkable block (25.7344ms)
+✔ the shared live HUD shows actual recovery, one-use/full-health states, phase and capped health width (3.5669ms)
+ℹ tests 95
+ℹ suites 0
+ℹ pass 80
+ℹ fail 15
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27697.4791
+
+✖ failing tests:
+
+test at outputs\pushpo-demo\tests\city-v4.test.mjs:22:1
+✖ rapist appearance, markers and objective stay civilian-like until Sight, including attempted auto-aggro (24.7467ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(enemyIdentified(a))
+  
+      at TestContext.<anonymous> (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/city-v4.test.mjs:27:32)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at outputs\pushpo-demo\tests\city-v4.test.mjs:31:1
+✖ regular kills and all boss kills never restore player health (18.3173ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/city-v4.test.mjs:35:67)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at outputs\pushpo-demo\tests\combat-v7.test.mjs:43:1
+✖ tutorial guides a nearby snatcher between 10 and 15 seconds and preserves playable enemy counts (3198.0724ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(objectivePosition(g))
+  
+      at TestContext.<anonymous> (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/combat-v7.test.mjs:47:87)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at outputs\pushpo-demo\tests\combat-v7.test.mjs:73:1
+✖ Water Mirror unlocks only after Sumon, blocks gun/weapon/grab contacts and shares a ten-second cooldown (12.0739ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(g.player.mirrorTime>0)
+  
+      at TestContext.<anonymous> (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/combat-v7.test.mjs:77:32)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at outputs\pushpo-demo\tests\combat-v7.test.mjs:88:1
+✖ live murderer gun windup aims at Pushpo, can miss, and triggers one Mirror cast for simultaneous contacts (6.2859ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/combat-v7.test.mjs:92:272)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at outputs\pushpo-demo\tests\engine-v3.test.mjs:13:1
+✖ types preserve their distinct health and points (30.4322ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 15
+  
+      at TestContext.<anonymous> (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/engine-v3.test.mjs:17:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 15,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at outputs\pushpo-demo\tests\engine-v3.test.mjs:20:1
+✖ sight identifies nearby targets, never damages civilians, respects cooldown and walls (10.7949ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  65 !== 100
+  
+      at TestContext.<anonymous> (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/engine-v3.test.mjs:22:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 65,
+    expected: 100,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at outputs\pushpo-demo\tests\engine-v3.test.mjs:25:1
+✖ first bosses unlock at cumulative thresholds and the final group plus farewell wins (9.1031ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'hunt' !== 'boss'
+  
+      at TestContext.<anonymous> (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/engine-v3.test.mjs:31:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'hunt',
+    expected: 'boss',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at outputs\pushpo-demo\tests\final-v9.test.mjs:26:1
+✖ actual boss story order leads to investigation, a physical journey, and exactly one three-enemy ambush (244.2222ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   index: 0,
+  +   key: 'companions'
+  -   index: 2,
+  -   key: 'bosses'
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/final-v9.test.mjs:31:129)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { key: 'companions', index: 0 },
+    expected: { key: 'bosses', index: 2 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at outputs\pushpo-demo\tests\final-v9.test.mjs:50:1
+✖ Hercules alternates contact attacks, changes dead targets, guards, takes damage and never uses a weapon (139.0035ms)
+  AssertionError [ERR_ASSERTION]: {"ally":{"id":183,"kind":"ally","role":"hercules","label":"Hercules","x":3960.0291239474736,"y":2176.1273569483233,"hp":360,"maxHp":360,"face":-1,"walk":235.08000000000345,"moving":true,"speed":126,"attack":998.98,"attackTime":0,"windup":0,"cooldown":0,"flash":0,"nearby":[{"id":184,"x":3988,"y":2174}],"velocityX":-1.9708760525263642,"velocityY":2.1273569483232677,"navVia":null,"pedestrianDetour":null,"sightRevealed":false,"pendingHit":null,"guardTime":0,"guardCooldown":998.98,"invulnerable":0,"freezeCooldown":998.98,"reaction":0,"stun":0,"freezeTime":2.98,"combatWatch":{"x":3797.239947849826,"y":2234.718323437437,"time":0.03}},"enemy":{"id":184,"x":3988,"y":2174,"kind":"boss","finalEnemy":true,"finalRole":"sohel","label":"Sohel Rana","sprite":2,"variant":0,"hp":300,"maxHp":300,"weapon":"knife","known":true,"face":-1,"walk":0.27,"speed":112,"damage":15,"range":73,"windup":-0.01,"cooldown":1.7,"attackTime":0.46,"flash":0,"dead":false,"moving":false,"reaction":0,"stun":0,"speechTime":0,"speech":"","targetId":183,"aggro":true,"velocityX":-3.1584803913874566,"velocityY":1.1461246080693854,"sightRevealed":false,"nearby":[{"id":183,"x":3962,"y":2174},{"id":186,"x":3998.7782849788864,"y":2119.3439698974034}],"frozenUntil":0,"attackX":3962,"attackY":2174,"attackKind":"punch","attackDuration":0.46,"pendingWeaponHit":{"time":0.17,"targetId":183}}}
+      at TestContext.<anonymous> (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/final-v9.test.mjs:55:348)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at outputs\pushpo-demo\tests\final-v9.test.mjs:81:1
+✖ Hercules can fall in the joined fight and restarting clears all final mission state (55.1118ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'playing' !== 'lost'
+  
+      at TestContext.<anonymous> (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/final-v9.test.mjs:82:359)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'playing',
+    expected: 'lost',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at outputs\pushpo-demo\tests\progression-v6.test.mjs:15:1
+✖ Sumon verdict and reflection are ordered, one-shot, and freeze combat, countdown and metro until dismissed (194.7867ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(a.dead)
+  
+      at hit (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/progression-v6.test.mjs:11:130)
+      at reward (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/progression-v6.test.mjs:13:105)
+      at TestContext.<anonymous> (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/progression-v6.test.mjs:23:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at outputs\pushpo-demo\tests\progression-v6.test.mjs:30:1
+✖ Bengali story strings retain the requested exact text (0.5953ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'সঠিক আইন ও বিচারের অভাবে নিজের উপর হওয়া অন্যায়ের বিচার আমি নিজে নিজেই করবো!\n' +
+  - 'টাকার ক্ষমতায় আমি এই দেশে বিচার পাই নি, এখন আমি নিজের উপর হওয়া অন্যায়ের বিচার নিজেই করবো!\n' +
+      '\n' +
+  +   'আমাকে CNG করে তুলে নিয়ে যাওয়ার অপরাধে সুমন মিয়ার মৃত্যুদণ্ড কার্যকর হলো'
+  -   'আমাকে CNG করে তুলে নেওয়ার অপরাধে সুমন মিয়ার মৃত্যুদণ্ড কার্যকর হলো'
+  
+      at TestContext.<anonymous> (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/progression-v6.test.mjs:31:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'সঠিক আইন ও বিচারের অভাবে নিজের উপর হওয়া অন্যায়ের বিচার আমি নিজে নিজেই করবো!\n\nআমাকে CNG করে তুলে নিয়ে যাওয়ার অপরাধে সুমন মিয়ার মৃত্যুদণ্ড কার্যকর হলো',
+    expected: 'টাকার ক্ষমতায় আমি এই দেশে বিচার পাই নি, এখন আমি নিজের উপর হওয়া অন্যায়ের বিচার নিজেই করবো!\n\nআমাকে CNG করে তুলে নেওয়ার অপরাধে সুমন মিয়ার মৃত্যুদণ্ড কার্যকর হলো',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at outputs\pushpo-demo\tests\progression-v6.test.mjs:36:1
+✖ rapist approach dialogue stays hidden before Sight and speaks once per encounter with a distant reset (6.8351ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + ''
+  - 'আমি নষ্ট মনে নষ্ট চোখে দেখি তোমাকে'
+  
+      at TestContext.<anonymous> (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/progression-v6.test.mjs:44:90)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '',
+    expected: 'আমি নষ্ট মনে নষ্ট চোখে দেখি তোমাকে',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at outputs\pushpo-demo\tests\story-v8.test.mjs:74:1
+✖ Hercules is an ally; player intervention in a revealed private case uses normal combat credit without fabricating a Hercules note (16.098ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(a.dead)
+  
+      at TestContext.<anonymous> (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/story-v8.test.mjs:76:332)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

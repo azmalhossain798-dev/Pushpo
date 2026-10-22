@@ -1,0 +1,4 @@
+import fs from 'node:fs';
+let p='outputs/pushpo-demo/dist/combat-v7.mjs',s=fs.readFileSync(p,'utf8').replace("?-.9*Math.min(1,1-a.windup", "?.9*Math.min(1,1-a.windup").replace("t<=contact?-.9+2.5*t/contact:1.6*(1-(t-contact)/(duration-contact))","t<=contact?.9-2.5*t/contact:-1.6*(1-(t-contact)/(duration-contact))");fs.writeFileSync(p,s);
+p='outputs/pushpo-demo/dist/art-v3.mjs';s=fs.readFileSync(p,'utf8').replace('c.translate(width*.09,height*.32);c.rotate(-.35);','c.translate(width*.09,height*.32);c.rotate(Math.PI-.35);');fs.writeFileSync(p,s);
+p='outputs/pushpo-demo/tests/integration-v12.test.mjs';s=fs.readFileSync(p,'utf8').replace('assert(contact.arm>before.arm);assert.equal(contact.arm,1.6)','assert(Math.abs(contact.arm)>Math.abs(before.arm));assert.equal(contact.arm,-1.6)');fs.writeFileSync(p,s);

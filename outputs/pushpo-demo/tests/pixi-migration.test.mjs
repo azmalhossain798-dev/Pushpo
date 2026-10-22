@@ -2,7 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {multiplyAffine,rendererSize} from '../dist/pixi-draw.mjs';
 import {project,unproject,screenDirection,SCENERY} from '../dist/scene-v3.mjs';
-import {createRun,update,inside,attack,clearPath,RULES} from '../dist/engine-v3.mjs';
+import {createRun,update,inside,clearPath,RULES} from '../dist/engine-v3.mjs';
+import {attack} from './combat-helpers.mjs';
 const near=(a,b)=>assert(Math.abs(a-b)<1e-8,`${a} != ${b}`);
 test('Pixi transforms keep the ground, camera and inverse pointer on the same gameplay plane',()=>{
  for(const width of [390,844,1280,1920])for(const ratio of [1,1.25,2,3]){
@@ -28,9 +29,9 @@ test('resizing preserves CSS scale and caps DPR without zero-sized GPU buffers',
  near(rendererSize(1150,720,1.5).scale,1);assert.equal(rendererSize(2000,1000,2).scale,1.2);
 });
 test('attacks cannot pass through a solid street prop even inside melee range',()=>{
- const stall=SCENERY.find(p=>p.id==='tea'),g=createRun(3);
- g.player.x=stall.x;g.player.y=stall.y+40;
- const enemy={id:90,kind:'enemy',type:0,known:true,x:stall.x,y:stall.y-40,hp:100,maxHp:100};
+ const stall=SCENERY.find(p=>p.id==='east-cng'),g=createRun(3);
+ g.player.x=stall.x;g.player.y=stall.y+43;
+ const enemy={id:90,kind:'enemy',type:0,known:true,x:stall.x,y:stall.y-43,hp:100,maxHp:100};
  assert(inside(g.player.x,g.player.y));assert(inside(enemy.x,enemy.y));
  assert(Math.hypot(enemy.x-g.player.x,enemy.y-g.player.y)<RULES.attackRange);assert(!clearPath(enemy,g.player));
  g.actors=[enemy];attack(g);assert.equal(enemy.hp,100);

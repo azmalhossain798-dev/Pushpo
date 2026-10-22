@@ -1,0 +1,39 @@
+✔ every building facade lands on the isometric footprint, with upright walls and consistent storey scale (1.0602ms)
+✔ seeded roadside litter stays at the curb rather than the driving lane and includes six kinds (16.0793ms)
+✔ all landmark footprints clear the road and sidewalk plane (0.8541ms)
+✔ rickshaws spawn clear of people and each other, follow connected lanes and select eight directional views (121.1309ms)
+✔ six minutes of traffic completes turns without overlaps, stuck junctions or leaving walkable roads (2421.2542ms)
+✔ traffic brakes for a crossing pedestrian and resumes after the crossing clears without health damage (2.8805ms)
+✔ traffic pauses with the run and a restart resets its seeded movement (4.4225ms)
+✔ walking NPCs share traffic collision rules and remain clear of rickshaw bodies (3642.9721ms)
+✔ a pedestrian passes a stopped rickshaw facing towards them rather than orbiting its front collider (13.4127ms)
+✔ a queue of NPCs clears a stopped rickshaw without a permanent crowd jam (122.0451ms)
+✔ NPCs bypass a road waypoint occupied by a stopped rickshaw instead of queuing on its collider (15.9645ms)
+✔ three minutes of city walking does not accumulate a permanent rickshaw crowd jam (17459.9494ms)
+✔ Pixi transforms keep the ground, camera and inverse pointer on the same gameplay plane (0.7011ms)
+✔ sprite rotation and facing flips keep cutout pivots fixed (0.091ms)
+✔ resizing preserves CSS scale and caps DPR without zero-sized GPU buffers (0.4389ms)
+✔ attacks cannot pass through a solid street prop even inside melee range (130.9473ms)
+✔ movement is screen-relative and the original long-frame clock rule is retained (2.9336ms)
+✔ projection is invertible and controls follow screen directions (1.2922ms)
+✔ activity actors and scenery start in valid positions (124.3803ms)
+✔ vendors stay with stalls, conversation partners talk, and customers step aside (2376.7634ms)
+✔ walking phase advances only with movement and stops at rest (2.8346ms)
+✔ three accessible curb stalls retain the population, all old NPC activities, and protected individual vendors (127.9304ms)
+✔ every individual shop heals exactly twenty percent of maximum once, with correct feedback and no kill/score/timer changes (9.1908ms)
+✔ recovery uses maximum rather than current health, clamps without overflow, and saves the meal at full health (8.7095ms)
+✔ interaction rejects distant/walled, missing, paused, story, cinematic, dead and active-strike requests (20.8538ms)
+✔ day and night repeat in 210-second phases with continuous dusk/dawn and distinct sky/ambient/sunlight (1.8818ms)
+✔ cycle follows the existing paused game clock without touching chapter or rescue timers and stalls work in all phases (35.4257ms)
+✔ increased six-kind litter is deterministic, static, outside traffic lanes and away from stall entrances (15.6768ms)
+✔ night lighting is bounded to visible sources, preserves its context, and keeps fixed gradient colors (0.4539ms)
+✔ Hercules navigates around a stall using connected roads rather than chasing across a non-walkable block (14.14ms)
+✔ the shared live HUD shows actual recovery, one-use/full-health states, phase and capped health width (3.308ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24095.5491

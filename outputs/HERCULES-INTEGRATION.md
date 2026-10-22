@@ -1,0 +1,13 @@
+# Hercules Stage 2 asset provenance
+
+Active atlas: `pushpo-demo/dist/assets/hercules-v8.png` (1536×1024 RGBA; front/rear). Generated with the built-in imagegen tool for this project. Original source PNGs and the earlier v1 concept remain unchanged. Purple aura animation is drawn separately by the shared renderer.
+
+Identity reference: user attachment `ChatGPT Image Oct 22, 2026, 12_32_14 AM.png`, SHA-256 `0e7926c6bcf230144b54c64e7dbe5c60dcbf1c193ccaab209444e0ba2aba0766`.
+Style reference: `pushpo-demo/dist/assets/bosses-v3.png`.
+Generated atlas SHA-256: `74f8ec987da75109920be3b907b8cdebd260e62ce0108e8bcb6032174e73867f`.
+
+Preserved traits: adult athletic build, black hooded long jacket, opaque angular mask, glowing violet eyes, black gloves, belt, trousers and heavy lace-up boots. Front/rear alpha bounds are measured using the existing atlas system. Transparent background and gaps between limbs were verified from PNG alpha data. No new source-image editing or replacement was used.
+
+## Exact built-in generation prompt
+
+Use case: stylized-concept. Asset type: production 2D character turnaround atlas for the existing Pushpo isometric browser game. Image 1 is the mandatory IDENTITY REFERENCE for Hercules. Image 2 is STYLE ONLY, matching the game's hand-painted outlined characters and warm highlights. Create one transparent landscape atlas with exactly TWO evenly sized full-body figures side by side, generous transparent margins and a clear gap. LEFT: front three-quarter Hercules facing slightly screen-right, arms relaxed and slightly away from torso, neutral standing pose suitable for cutout walking animation. RIGHT: rear three-quarter view of precisely the SAME Hercules facing away slightly screen-left, hood back and long split jacket hem visible. Preserve the attached reference's athletic adult build, black hooded long jacket, opaque angular charcoal full-face mask, glowing violet eye slits, fully covered black gloves, black belt, fitted black trousers and chunky black lace-up boots. Keep costume/details/proportions consistent between views and readable at 105-pixel game height. Render from the same gently elevated orthographic camera as existing sprites. Subtle violet rim light only. DO NOT bake aura swirls, glow clouds, floor rings, shadows or particles into this atlas: the engine will animate his purple aura separately. No other characters, weapons, logos, text, labels, background, scenery or decorative panels. True transparent RGBA background, including gaps between limbs. Head and boots fully within each half; no cropped body parts. This is an adult fictional supernatural ally, no gore or violence shown.

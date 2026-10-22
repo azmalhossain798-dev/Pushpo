@@ -13,7 +13,7 @@ test('projection is invertible and controls follow screen directions',()=>{
 });
 test('activity actors and scenery start in valid positions',()=>{
  const g=createRun(300);
- assert.equal(g.actors.filter(a=>a.activity).length,ACTIVITY_SPOTS.length);
+ assert.equal(g.actors.filter(a=>a.activity&&!a.stallId).length,ACTIVITY_SPOTS.length);
  assert.equal(new Set(g.actors.map(a=>a.id)).size,g.actors.length);
  for(const a of g.actors.filter(a=>a.activity))assert(inside(a.x,a.y),`${a.spotId} must stand on a walkable tile`);
  for(const p of SCENERY)assert(!inside(p.x,p.y),`${p.id} must be solid`);

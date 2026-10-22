@@ -30,7 +30,7 @@ export class PixiPainter extends Painter{
  release(){
   if(this.released||!this.initialized)return;this.released=true;
   this.draw.destroy();this.app.destroy(false,{children:true});
-  this.floor=null;this.images={};this.cells={};
+  this.floor=null;this.buildingTextures?.clear();this.combatArms=null;this.fuchkaArt=null;this.images={};this.cells={};
  }
  destroy(){
   if(this.disposed)return;this.disposed=true;

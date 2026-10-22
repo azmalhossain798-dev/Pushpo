@@ -1,6 +1,8 @@
 import {NODES,ROADS,WORLD,inside,random} from './engine-v3.mjs';
 import {project,METRO_LINE,ROUNDABOUTS,SCENERY} from './scene-v3.mjs';
 import {metroPosition} from './city-systems.mjs';
+import {utilitySites} from './environment-v5.mjs';
+import {streetFurnitureClear} from './boulevards-v11.mjs';
 const cityTau=Math.PI*2;
 function cityPolygon(c,points,fill,stroke=null,width=1){c.beginPath();for(let i=0;i<points.length;i++)c[i?'lineTo':'moveTo'](points[i].x,points[i].y);c.closePath();if(fill){c.fillStyle=fill;c.fill();}if(stroke){c.strokeStyle=stroke;c.lineWidth=width;c.stroke();}}
 function cityOval(c,x,y,rx,ry,fill,stroke=null,width=1){c.beginPath();c.ellipse(x,y,rx,ry,0,0,cityTau);if(fill){c.fillStyle=fill;c.fill();}if(stroke){c.strokeStyle=stroke;c.lineWidth=width;c.stroke();}}
@@ -16,27 +18,21 @@ export function addCityDetails(painter,c){
   if(choice<.56)objects.push({kind:'tree',x,y,p,depth:p.y,width:84,height:105,small:true});
   else objects.push({kind:'garden',x,y,p,depth:p.y,width:50,height:50,seed:choice});
  }
- for(const road of ROADS){
-  const a=NODES[road.a],b=NODES[road.b],length=Math.hypot(b[0]-a[0],b[1]-a[1]),nx=-(b[1]-a[1])/length,ny=(b[0]-a[0])/length;
-  let last=null;
-  for(let d=110;d<length;d+=340){
-   const x=a[0]+(b[0]-a[0])*d/length+nx*(road.width/2+29),y=a[1]+(b[1]-a[1])*d/length+ny*(road.width/2+29),p=project(x,y);
-   if(SCENERY.some(o=>Math.hypot(o.x-x,o.y-y)<80))continue;
-   if(ROUNDABOUTS.some(r=>Math.hypot(r.x-x,r.y-y)<r.outer+35))continue;
-   const o={kind:'utility',x,y,p,depth:p.y,width:150,height:190,wireTo:last?.p??objects.find(n=>n.kind==='utility'&&Math.hypot(n.x-x,n.y-y)>90&&Math.hypot(n.x-x,n.y-y)<480)?.p};objects.push(o);last=o;
-   if(rng()>.28){const px=x+nx*25,py=y+ny*25,q=project(px,py);objects.push({kind:'planter',x:px,y:py,p:q,depth:q.y,width:37,height:43});}
-   // Weathered sidewalk edges, litter and drain gratings are baked, not live allocations.
-   c.fillStyle='#4d4840';c.fillRect(x-10,y+12,23,7);c.fillStyle='#c8a270';c.fillRect(x+20,y-4,4,6);
-  }
+ const poles=utilitySites(NODES,ROADS);
+ for(const site of poles){const {x,y,p}=site,previous=objects.filter(o=>o.kind==='utility'&&o.road===site.road&&Math.hypot(o.x-x,o.y-y)<800).at(-1);
+  objects.push({kind:'utility',...site,depth:p.y,width:150,height:190,wireTo:previous?.p});
+  if(rng()>.28){const px=x+21,py=y+12,q=project(px,py);if(streetFurnitureClear({x:px,y:py},NODES,ROADS,18))objects.push({kind:'planter',x:px,y:py,p:q,depth:q.y,width:37,height:43});}
+  c.fillStyle='#4d4840';c.fillRect(x-10,y+12,23,7);
  }
+ painter.objects=painter.objects.filter(o=>o.kind!=='lamp'||!poles.some(p=>Math.hypot(o.p.x-p.p.x,o.p.y-p.p.y)<48));
  const segments=30;
  for(let i=0;i<segments;i++){
   const a=linePoint(i/segments),b=linePoint((i+1)/segments),pa=project(a.x,a.y),pb=project(b.x,b.y);
-  objects.push({kind:'rail',a,b,pa,pb,p:{x:(pa.x+pb.x)/2,y:(pa.y+pb.y)/2},depth:Math.max(pa.y,pb.y),width:Math.abs(pb.x-pa.x)+100,height:Math.abs(pb.y-pa.y)+170});
+  painter.objects.push({kind:'rail',a,b,pa,pb,pier:i%2===0,gantry:i%3===0,p:{x:(pa.x+pb.x)/2,y:(pa.y+pb.y)/2},depth:Math.max(pa.y,pb.y),width:Math.abs(pb.x-pa.x)+150,height:Math.abs(pb.y-pa.y)+240});
  }
  const station=linePoint(METRO_LINE.station),p=project(station.x,station.y);
- objects.push({kind:'station',...station,p,depth:p.y+32,width:235,height:215});
- painter.cityStats={buildings:painter.blockCount,roundabouts:ROUNDABOUTS.length,roads:ROADS.length,objects:objects.length};
+ painter.objects.push({kind:'station',...station,p,depth:p.y+145,width:235,height:270});
+ painter.cityStats={buildings:painter.blockCount,roundabouts:ROUNDABOUTS.length,roads:ROADS.length,objects:painter.objects.length,poles:poles.length};
 }
 export function addMetroCars(list,g,view){
  if(!g.metro?.active)return;
@@ -49,21 +45,24 @@ export function addMetroCars(list,g,view){
 }
 function trainCorners(o){const {x,y,ux,uy}=o,vx=-uy,vy=ux;return [[-85,-31],[85,-31],[85,31],[-85,31]].map(([a,b])=>project(x+ux*a+vx*b,y+uy*a+vy*b));}
 function trainCar(c,o){
- const corners=trainCorners(o),base=corners.map(p=>({x:p.x,y:p.y-METRO_LINE.elevation-8})),roof=base.map(p=>({x:p.x,y:p.y-30}));
- for(const [a,b]of[[0,1],[1,2],[2,3]]){
-  cityPolygon(c,[roof[a],roof[b],base[b],base[a]],a===0?'#d4ded4':'#98aea5','#3b5756',1);
-  const pa=roof[a],pb=roof[b];
-  cityLine(c,{x:pa.x,y:pa.y+22},{x:pb.x,y:pb.y+22},5,'#197154');
-  if(a!==1)for(let i=0;i<7;i++){
-   const t=(i+.14)/7,u=(i+.82)/7;
-   cityPolygon(c,[{x:pa.x+(pb.x-pa.x)*t,y:pa.y+(pb.y-pa.y)*t+5},{x:pa.x+(pb.x-pa.x)*u,y:pa.y+(pb.y-pa.y)*u+5},{x:pa.x+(pb.x-pa.x)*u,y:pa.y+(pb.y-pa.y)*u+16},{x:pa.x+(pb.x-pa.x)*t,y:pa.y+(pb.y-pa.y)*t+16}],'#183d48','#b4c2b9',.6);
+ const corners=trainCorners(o),base=corners.map(p=>({x:p.x,y:p.y-METRO_LINE.elevation-5})),roof=base.map(p=>({x:p.x,y:p.y-42}));
+ const wheelSide=o.ux-o.uy>=0?1:-1;
+ for(const offset of [-57,57]){const p=project(o.x+o.ux*offset-o.uy*31*wheelSide,o.y+o.uy*offset+o.ux*31*wheelSide);cityOval(c,p.x,p.y-METRO_LINE.elevation-2,6,3.5,'#303d3b','#9b9f92',1);}
+ const faces=[[0,1],[1,2],[2,3],[3,0]].sort((a,b)=>(base[a[0]].y+base[a[1]].y)-(base[b[0]].y+base[b[1]].y));
+ for(const [a,b]of faces){
+  const pa=roof[a],pb=roof[b],face=(t,u,top,bottom,color)=>cityPolygon(c,[{x:pa.x+(pb.x-pa.x)*t,y:pa.y+(pb.y-pa.y)*t+top},{x:pa.x+(pb.x-pa.x)*u,y:pa.y+(pb.y-pa.y)*u+top},{x:pa.x+(pb.x-pa.x)*u,y:pa.y+(pb.y-pa.y)*u+bottom},{x:pa.x+(pb.x-pa.x)*t,y:pa.y+(pb.y-pa.y)*t+bottom}],color);
+  cityPolygon(c,[pa,pb,base[b],base[a]],'#f4f1e7','#777f77',1);
+  face(0,1,36,41,'#a33332');face(0,1,1,3,'#2b7567');
+  if(a===0||a===2){for(let i=0;i<8;i++){
+   const t=(i+.15)/8,u=(i+.83)/8,door=i===2||i===5;face(t,u,door?5:8,door?35:26,door?'#d7d7c9':'#183335');
+   if(door){face(t,t+.018,7,34,'#328575');face(u-.018,u,7,34,'#b7473d');face((t+u)/2-.005,(t+u)/2+.005,7,34,'#707c76');}
+   else face(t+.015,u-.015,9,11,'#718c87');
+  }}else if(a===1&&o.index===0){face(.05,.95,1,28,'#087c73');face(.17,.83,7,24,'#142f35');face(.20,.80,8,10,'#6b9c9a');face(.49,.51,8,24,'#0a4c50');face(.08,.92,28,36,'#eeeede');
+   const p={x:(pa.x+pb.x)/2,y:(pa.y+pb.y)/2+32};cityOval(c,p.x-7,p.y,2,2,'#fff4c1');cityOval(c,p.x+7,p.y,2,2,'#fff4c1');
   }
  }
- cityPolygon(c,roof,'#e3e9df','#748e85',1.5);
- const center={x:o.p.x,y:o.p.y-METRO_LINE.elevation-35};
- cityLine(c,{x:center.x-19,y:center.y-2},{x:center.x+16,y:center.y+4},8,'#bdc9bd');
- if(o.index===0){const nose=base[2];cityOval(c,nose.x+2,nose.y-12,3,2,'#ffe9a4');cityOval(c,nose.x-9,nose.y-17,2,2,'#ffe9a4');}
- for(const i of [0,2])cityOval(c,base[i].x,base[i].y+1,5,3,'#263f3c');
+ cityPolygon(c,roof,'#d9d9cb','#878e83',1.2);
+ for(const offset of [-43,28]){const p=project(o.x+o.ux*offset,o.y+o.uy*offset),q={x:p.x,y:p.y-METRO_LINE.elevation-49};cityPolygon(c,[{x:q.x-12,y:q.y-3},{x:q.x+7,y:q.y-7},{x:q.x+15,y:q.y+1},{x:q.x-5,y:q.y+5}],'#b8b8a9','#92998b',.7);}
 }
 export function drawCityObject(painter,c,o,player,time){
  const {x,y}=o.p;
@@ -77,15 +76,17 @@ export function drawCityObject(painter,c,o,player,time){
    c.beginPath();c.moveTo(a.x,a.y);c.quadraticCurveTo((a.x+b.x)/2,(a.y+b.y)/2+23,b.x,b.y);c.strokeStyle='#302e29';c.lineWidth=1.2;c.stroke();
   }
  }else if(o.kind==='rail'){
-  const {pa,pb}=o,h=METRO_LINE.elevation,dx=pb.x-pa.x,dy=pb.y-pa.y,len=Math.hypot(dx,dy),nx=-dy/len,ny=dx/len;
+  const {pa,pb}=o,h=METRO_LINE.elevation,dx=pb.x-pa.x,dy=pb.y-pa.y,wx=o.b.x-o.a.x,wy=o.b.y-o.a.y,length=Math.hypot(wx,wy),vx=-wy/length,vy=wx/length,side=project(vx,vy),nx=side.x,ny=side.y;
   c.save();if(Math.abs(x-player.x)<75&&Math.abs(y-h-player.y+50)<60)c.globalAlpha=.4;
-  cityPolygon(c,[{x:pb.x-7,y:pb.y},{x:pb.x+7,y:pb.y},{x:pb.x+7,y:pb.y-h+5},{x:pb.x-7,y:pb.y-h+5}],'#9c9a85','#666e64',1);
-  cityOval(c,pb.x+4,pb.y,14,6,'#343c3436');
-  const points=[{x:pa.x+nx*23,y:pa.y-h+ny*23},{x:pb.x+nx*23,y:pb.y-h+ny*23},{x:pb.x-nx*23,y:pb.y-h-ny*23},{x:pa.x-nx*23,y:pa.y-h-ny*23}];
-  cityPolygon(c,points,'#777e72','#c1c2a5',2);
-  cityLine(c,{x:points[0].x,y:points[0].y+8},{x:points[1].x,y:points[1].y+8},6,'#a7aa91');
-  for(let i=0;i<7;i++){const t=i/7,px=pa.x+dx*t,py=pa.y+dy*t-h;cityLine(c,{x:px+nx*18,y:py+ny*18},{x:px-nx*18,y:py-ny*18},3,'#454e49');}
-  for(const sign of [-1,1])cityLine(c,{x:pa.x+nx*11*sign,y:pa.y-h+ny*11*sign},{x:pb.x+nx*11*sign,y:pb.y-h+ny*11*sign},2.5,'#d9d8bd');
+  if(o.pier){cityOval(c,pb.x+6,pb.y,23,8,'#343c3436');cityPolygon(c,[{x:pb.x-12,y:pb.y},{x:pb.x+9,y:pb.y+3},{x:pb.x+9,y:pb.y-h+46},{x:pb.x+35,y:pb.y-h+22},{x:pb.x-39,y:pb.y-h+22},{x:pb.x-12,y:pb.y-h+46}],'#c6bca6','#8d9586',1);cityLine(c,{x:pb.x-8,y:pb.y-1},{x:pb.x-8,y:pb.y-h+42},2,'#e4dcc4');}
+  const points=[{x:pa.x+nx*58,y:pa.y-h+ny*58},{x:pb.x+nx*58,y:pb.y-h+ny*58},{x:pb.x-nx*58,y:pb.y-h-ny*58},{x:pa.x-nx*58,y:pa.y-h-ny*58}],front=ny>0?[0,1]:[3,2];
+  const a=points[front[0]],b=points[front[1]];cityPolygon(c,[a,b,{x:b.x,y:b.y+18},{x:a.x,y:a.y+18}],'#afa995','#79877e',1);
+  cityPolygon(c,points,'#d1c9b1','#eee6cc',1.5);cityLine(c,{x:a.x,y:a.y+3},{x:b.x,y:b.y+3},3,'#e8e0c7');
+  for(let i=0;i<9;i++){const t=i/9,px=pa.x+dx*t,py=pa.y+dy*t-h;cityLine(c,{x:px+nx*24,y:py+ny*24},{x:px-nx*24,y:py-ny*24},3,'#92978a');}
+  for(const sign of [-1,1])cityLine(c,{x:pa.x+nx*15*sign,y:pa.y-h+ny*15*sign},{x:pb.x+nx*15*sign,y:pb.y-h+ny*15*sign},2,'#65766e');
+  for(const sign of [-1,1])cityLine(c,{x:pa.x+nx*54*sign,y:pa.y-h+ny*54*sign-7},{x:pb.x+nx*54*sign,y:pb.y-h+ny*54*sign-7},3,'#c5bcaa');
+  if(o.gantry){for(const sign of [-1,1]){const foot={x:pb.x+nx*55*sign,y:pb.y-h+ny*55*sign};cityLine(c,foot,{x:foot.x,y:foot.y-73},3,'#65928e');cityLine(c,{x:foot.x,y:foot.y-73},{x:pb.x+nx*15*sign,y:pb.y-h-70+ny*15*sign},2,'#b4c6b6');for(let i=0;i<3;i++)cityOval(c,foot.x+sign*i*3,foot.y-69,1.5,2,'#d5ded0');}}
+  cityLine(c,{x:pa.x,y:pa.y-h-67},{x:pb.x,y:pb.y-h-67},.8,'#445d5b');cityLine(c,{x:pa.x,y:pa.y-h-61},{x:pb.x,y:pb.y-h-61},.7,'#718983');
   c.restore();
  }else if(o.kind==='station'){
   c.save();if(o.depth>player.y&&Math.abs(x-player.x)<125&&player.y>y-210)c.globalAlpha=.34;

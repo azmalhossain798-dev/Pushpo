@@ -1,0 +1,108 @@
+✔ 180 NPCs preserve original activities and one roaming homeless resident remains approximately 0.5 percent (134.2213ms)
+✔ expanded intersections and circular roads are connected and their islands are solid (0.4282ms)
+✔ rapist appearance, markers and objective stay civilian-like until Sight, including attempted auto-aggro (23.1566ms)
+✔ regular kills and all boss kills never restore player health (347.3702ms)
+✔ combat drives Pushpo and enemy arm animation phases and snatcher taunt verbatim (34.8465ms)
+✔ metro moves, dwells at its real station, exits, and randomizes gaps of at least 90 seconds (0.4956ms)
+✔ pause freezes metro and restarting creates a fresh random schedule (3.8921ms)
+✔ homeless NPC asks a nearby passerby, receives a reply and resumes roaming (181.305ms)
+✔ opening summary matches the requested replacement exactly (1.1178ms)
+✔ slap, face punch and kick hit exactly once at contact and cause distinct poses and reactions (145.172ms)
+✔ combo advances only for accepted clicks; invalid, paused, story and expired actions cannot fire (5.7503ms)
+✔ contact rechecks moving targets, defeated targets, range and solid obstructions (5.4715ms)
+✔ Sight is locked through four actual defeats and unlocks on the fifth, with a single notice and no free points (3.2288ms)
+✔ tutorial guides a nearby snatcher between 10 and 15 seconds and preserves playable enemy counts (8979.9532ms)
+✔ snatchers survive nonlethal hits, randomly flee with added dialogue and keep their existing attack taunt (16.8498ms)
+✔ murderer lines are randomized once per actor and do not restart in the same encounter (43.6809ms)
+✔ two special civilians taunt once, accept one nonlethal slap and flee without points or kills (13.1488ms)
+✔ Water Mirror unlocks only after Sumon, blocks gun/weapon/grab contacts and shares a ten-second cooldown (25.3619ms)
+✔ Sumon defeat enables Mirror without skipping his existing notes, and restart relocks both abilities (6.7197ms)
+✔ live murderer gun windup aims at Pushpo, can miss, and triggers one Mirror cast for simultaneous contacts (6.7449ms)
+✔ fleeing follows existing traffic colliders and returns to ordinary navigation without attacking (377.3324ms)
+✔ post-unlock replenishment introduces a disguised rapist without replacing existing actors (3.4774ms)
+✔ combat markup starts with two attacks, hidden locked abilities, and preserved dodge and movement (0.8754ms)
+✔ larger district is connected, every boss location is accessible, and starts are randomized (144.4076ms)
+✔ types preserve their distinct health and points (30.2129ms)
+✔ sight identifies nearby targets, never damages civilians, respects cooldown and walls (19.4868ms)
+✔ first bosses unlock at cumulative thresholds and the final group plus farewell wins (366.0815ms)
+✔ replenishment never exceeds four regular enemies or two simultaneous attackers (7.374ms)
+✔ timer begins at 15 minutes, pauses, times out, and resets with a new run (4.9992ms)
+✔ movement collides with buildings and the roundabout; dash grants invulnerability (653.8282ms)
+✔ lethal attack ends the run and bosses do not duplicate (5.0807ms)
+✔ actual boss story order leads to investigation, a physical journey, and exactly one three-enemy ambush (209.1174ms)
+✔ 60-second arrival clock pauses, does not reset on leaving, and expiry kills Hercules exactly once (180.3558ms)
+✔ Hercules freeze immobilizes multiple enemies for three seconds and uses one twelve-second cooldown (55.9412ms)
+✔ Hercules alternates contact attacks, changes dead targets, guards, takes damage and never uses a weapon (158.89ms)
+✔ all three enemies are required; Sohel alone cannot win; Bengali farewell is reader-paced and ends once (55.7602ms)
+✔ the full 700-health group is defeatable through normal alternating player strikes (80.1132ms)
+✔ Hercules can fall in the joined fight and restarting clears all final mission state (54.2426ms)
+✔ Pushpo can reach the rescue on foot through connected roads within sixty seconds (81.4176ms)
+✔ rescue is viable with the full retained crowd and moving traffic; Hercules survives the whole arrival window (26398.3505ms)
+✔ final HUD and subtitle presenter share existing responsive UI and Bengali farewell action (0.8052ms)
+✖ all identities, artwork, labels and both map sizes follow active Sight, ignoring stale known/aggro flags (135.4947ms)
+✔ exactly three bound fuchka sellers survive reinitialization and long play; each retains one-use 20-percent recovery (2824.2992ms)
+✔ Water Mirror covers exactly three seconds, expires without lingering protection, and cannot recast before ten seconds (36.7435ms)
+✔ machete windup, contact and recovery use one hit and recheck target, range and obstruction (11.1324ms)
+✖ actual pause/resume/restart button handlers freeze the full run and block actions; Sight HUD reports locked/available/active (6.6645ms)
+✔ Sumon verdict and reflection are ordered, one-shot, and freeze combat, countdown and metro until dismissed (587.0329ms)
+✔ Bengali story strings retain the requested exact text (0.1479ms)
+✔ rapist approach dialogue stays hidden before Sight and speaks once per encounter with a distant reset (7.5644ms)
+✔ home visits preserve NPC identities, reserve doors, fade inside and wait for a clear exit (3.1198ms)
+✔ engine routes home visitors through a complete visit without vehicle or visible NPC overlap (736.7768ms)
+✔ crowd separation resolves exact overlap and keeps anchored activities fixed (0.538ms)
+✔ opposing pedestrian streams pass each other with body spacing instead of a head-on deadlock (112.479ms)
+✔ utility sites have logical world and screen spacing and asphalt contains seeded aggregate (5.5848ms)
+✔ opening establishes the unknown fish, apartment awakening and 60-day narrative deadline without a day simulation (138.7877ms)
+✔ Sumon preserves both existing beats, unlocks Mirror and announces the ten-second cooldown exactly once (4.2123ms)
+✔ Hafizur note precedes a physical corner approach and the one-time Hercules conversation, freezing unsafe input and countdown (12.6317ms)
+✔ the approach works among retained crowds and rickshaws, and keeps feet on the street plane (470.0765ms)
+✔ Bengali dialogue preserves all seven turns and every paragraph, including Anu, DNA, the river and the offer to help (0.2543ms)
+✔ the shared subtitle presenter exposes readable speaker text and portraits, and ends with investigation rather than a final mission (0.3403ms)
+✔ Hercules hunts his own targets, leaves the exact pocket note once per kill and grants no player rewards (336.3854ms)
+✔ Hercules is an ally; player intervention in a revealed private case uses normal combat credit without fabricating a Hercules note (11.8897ms)
+✔ independent hunts continue in the populated district without exceeding the regular-enemy cap or ignoring rickshaw colliders (16767.6282ms)
+✔ Sohel Rana stays unavailable from score alone; the investigation interlude has no chapter countdown (9.3863ms)
+✔ Hercules front/rear sprites use the generated reference-based RGBA atlas and keep his defining identity (2.3ms)
+ℹ tests 65
+ℹ suites 0
+ℹ pass 63
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27396.3064
+
+✖ failing tests:
+
+test at outputs\pushpo-demo\tests\integration-v12.test.mjs:21:1
+✖ all identities, artwork, labels and both map sizes follow active Sight, ignoring stale known/aggro flags (135.4947ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(engine.objectivePosition(g))
+  
+      at TestContext.<anonymous> (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/integration-v12.test.mjs:28:162)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at outputs\pushpo-demo\tests\integration-v12.test.mjs:67:1
+✖ actual pause/resume/restart button handlers freeze the full run and block actions; Sight HUD reports locked/available/active (6.6645ms)
+  TypeError: Cannot read properties of undefined (reading 'classList')
+      at syncUI (evalmachine.<anonymous>:87:168)
+      at start (evalmachine.<anonymous>:32:120)
+      at Object.click (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/integration-v12.test.mjs:61:479)
+      at TestContext.<anonymous> (file:///C:/Users/User/Documents/Codex/2026-10-20/let-s-brain-storm-an-idea-4/outputs/pushpo-demo/tests/integration-v12.test.mjs:68:52)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

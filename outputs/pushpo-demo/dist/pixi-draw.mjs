@@ -22,7 +22,7 @@ export class PixiDraw{
   this.transformMatrix=new PIXI.Matrix();
  }
  attach(stage){
-  for(const name of ['ground','world','effects','guidance']){
+  for(const name of ['ground','world','lighting','effects','guidance']){
    const layer=new this.P.Container({label:name,sortableChildren:true,eventMode:'none'});
    stage.addChild(layer);this.layers[name]=layer;
   }this.layer('ground');

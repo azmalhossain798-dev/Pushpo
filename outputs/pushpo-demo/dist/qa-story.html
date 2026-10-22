@@ -1,0 +1,26 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pushpo story verification</title><link rel="stylesheet" href="style-v2.css"><style>body{display:flex;flex-direction:column;height:100dvh}header{display:flex;gap:7px;flex-wrap:wrap;padding:9px;background:#152c43;font:12px system-ui}header button{padding:7px}output{padding:7px 12px;font:12px system-ui}main{position:relative;flex:1;min-height:0}canvas{display:block;width:100%;height:100%}</style></head><body>
+<header><strong>Stage 2 story QA</strong><button id="sumon">Sumon defeat</button><button id="hafizur">Hafizur defeat</button><button id="gate">Check Stage 3 gate</button><button id="hunt">Follow independent hunt</button></header><output id="result">Loading shared story UI…</output><main id="scene"><canvas id="stage"></canvas></main>
+<script src="vendor/pixi-8.22.0.min.js"></script><script type="module">
+import {PixiPainter} from './pixi-renderer.mjs';
+import {createRun,spawnBoss,attack,update,continueStory} from './engine-v3.mjs';
+import {currentStoryBeat} from './story-v6.mjs';
+import {presentStoryCard} from './story-ui-v8.mjs';
+import {project} from './scene-v3.mjs';
+const markup=new DOMParser().parseFromString(await(await fetch('./index.html')).text(),'text/html');
+for(const id of ['story-screen','cinematic-walk'])document.querySelector('#scene').append(document.importNode(markup.getElementById(id),true));
+const painter=new PixiPainter(document.querySelector('#stage'));await painter.ready;
+let game=createRun(8801),shown='',last=performance.now(),time=0,follow=false,frameId=0;
+const result=document.querySelector('#result'),say=text=>result.textContent=text;
+function fixture(stage){game=createRun(8801);game.chapter=stage;game.points=stage?300:150;game.player.invulnerable=999;game.spawnClock=999;follow=false;spawnBoss(game);const b=game.actors.find(a=>a.kind==='boss');Object.assign(game.player,{x:b.x+30,y:b.y});b.hp=35;attack(game);for(let i=0;i<20;i++)update(game,.01);painter.camera=project(game.player.x,game.player.y);shown='';say('Actual boss contact → existing note → continuation. Press Continue or Enter.');}
+document.querySelector('#sumon').onclick=()=>fixture(0);document.querySelector('#hafizur').onclick=()=>fixture(1);
+document.querySelector('#story-next').onclick=()=>{continueStory(game);last=performance.now();};
+document.querySelector('#gate').onclick=()=>{if(game.chapter!==2){say('Run the Hafizur defeat fixture first.');return;}game.points=9999;spawnBoss(game);say(game.actors.some(a=>a.kind==='boss'&&a.label==='Sohel Rana')?'FAIL: premature final boss':'PASS: Sohel Rana remains gated; points do not start Stage 3.');};
+document.querySelector('#hunt').onclick=()=>{follow=!follow;say('Independent hunts: '+game.hercules.kills+' · pocket notes: '+game.hercules.notes.length);};
+window.addEventListener('keydown',e=>{if(['Enter','Space'].includes(e.code)&&game.story&&!e.repeat){e.preventDefault();document.querySelector('#story-next').click();}});
+const observer=new ResizeObserver(()=>painter.resize());observer.observe(document.querySelector('#scene'));painter.resize();
+function frame(now){const dt=Math.min(.06,(now-last)/1000);last=now;update(game,dt);time+=dt;const beat=currentStoryBeat(game),screen=document.querySelector('#story-screen');screen.classList.toggle('hidden',!beat);if(beat&&shown!==beat.id){shown=beat.id;presentStoryCard(document,game,beat);}if(!beat)shown='';document.querySelector('#cinematic-walk').classList.toggle('hidden',game.cinematic?.phase!=='approach');
+ if(follow&&game.hercules.introComplete){const h=game.actors.find(a=>a.role==='hercules');if(h){const p=project(h.x,h.y);painter.camera={x:p.x,y:p.y-55};}say('Independent hunts: '+game.hercules.kills+' · '+(game.hercules.notes.at(-1)?.text??'No completed case yet'));}
+ const h=follow&&game.hercules.introComplete?game.actors.find(a=>a.role==='hercules'):null;painter.render(h?{...game,cinematic:{focus:h}}:game,time,true);frameId=requestAnimationFrame(frame);}
+say('Choose a boss defeat. This QA page uses the actual engine, sprites, subtitle presenter and CSS.');frameId=requestAnimationFrame(frame);
+window.addEventListener('pagehide',()=>{cancelAnimationFrame(frameId);observer.disconnect();painter.destroy();},{once:true});
+</script></body></html>

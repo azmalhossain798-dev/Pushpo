@@ -1,0 +1,40 @@
+✔ slap, face punch and kick hit exactly once at contact and cause distinct poses and reactions (134.5363ms)
+✔ combo advances only for accepted clicks; invalid, paused, story and expired actions cannot fire (6.291ms)
+✔ contact rechecks moving targets, defeated targets, range and solid obstructions (5.1082ms)
+✔ Sight is locked through four actual defeats and unlocks on the fifth, with a single notice and no free points (3.2292ms)
+✔ tutorial guides a nearby snatcher between 10 and 15 seconds and preserves playable enemy counts (8427.0205ms)
+✔ snatchers survive nonlethal hits, randomly flee with added dialogue and keep their existing attack taunt (15.0124ms)
+✔ murderer lines are randomized once per actor and do not restart in the same encounter (39.782ms)
+✔ two special civilians taunt once, accept one nonlethal slap and flee without points or kills (12.9107ms)
+✔ Water Mirror unlocks only after Sumon, blocks gun/weapon/grab contacts and shares a ten-second cooldown (21.9793ms)
+✔ Sumon defeat enables Mirror without skipping his existing notes, and restart relocks both abilities (3.9481ms)
+✔ live murderer gun windup aims at Pushpo, can miss, and triggers one Mirror cast for simultaneous contacts (6.0207ms)
+✔ fleeing follows existing traffic colliders and returns to ordinary navigation without attacking (320.6128ms)
+✔ post-unlock replenishment introduces a disguised rapist without replacing existing actors (1.9971ms)
+✔ combat markup starts with two attacks, hidden locked abilities, and preserved dodge and movement (0.593ms)
+✔ actual boss story order leads to investigation, a physical journey, and exactly one three-enemy ambush (189.4513ms)
+✔ 60-second arrival clock pauses, does not reset on leaving, and expiry kills Hercules exactly once (164.7782ms)
+✔ Hercules freeze immobilizes multiple enemies for three seconds and uses one twelve-second cooldown (54.5731ms)
+✔ Hercules alternates contact attacks, changes dead targets, guards, takes damage and never uses a weapon (135.4636ms)
+✔ all three enemies are required; Sohel alone cannot win; Bengali farewell is reader-paced and ends once (52.6571ms)
+✔ the full 700-health group is defeatable through normal alternating player strikes (63.3294ms)
+✔ Hercules can fall in the joined fight and restarting clears all final mission state (55.9151ms)
+✔ Pushpo can reach the rescue on foot through connected roads within sixty seconds (77.2906ms)
+✔ rescue is viable with the full retained crowd and moving traffic; Hercules survives the whole arrival window (25577.8232ms)
+✔ final HUD and subtitle presenter share existing responsive UI and Bengali farewell action (0.7895ms)
+✔ all identities, artwork, labels and both map sizes follow active Sight, ignoring stale known/aggro flags (132.9712ms)
+✔ exactly three bound fuchka sellers survive reinitialization and long play; each retains one-use 20-percent recovery (2599.6802ms)
+✔ Water Mirror covers exactly three seconds, expires without lingering protection, and cannot recast before ten seconds (23.1928ms)
+✔ machete windup, contact and recovery use one hit and recheck target, range and obstruction (7.8334ms)
+✔ actual pause/resume/restart button handlers freeze the full run and block actions; Sight HUD reports locked/available/active (11.5479ms)
+✔ boss nameplates, health UI, targeting and map locations conceal outside active Sight (4.9515ms)
+✔ portable edition is self-contained, mirrors the download, and includes the pinned renderer (710.8621ms)
+✔ vendored PixiJS artifact matches the reviewed upstream release (1.436ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26481.4198

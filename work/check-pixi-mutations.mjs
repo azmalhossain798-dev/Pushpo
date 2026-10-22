@@ -4,11 +4,11 @@ import path from 'node:path';
 import {spawnSync} from 'node:child_process';
 const scratch=path.resolve('work/pixi-mutation-check'),project=path.resolve('outputs/pushpo-demo');
 await fs.mkdir(path.join(scratch,'dist'),{recursive:true});await fs.mkdir(path.join(scratch,'tests'),{recursive:true});
-for(const file of ['scene-v3.mjs','pixi-draw.mjs'])await fs.copyFile(path.join(project,'dist',file),path.join(scratch,'dist',file));
-for(const file of ['engine-v3.test.mjs','pixi-migration.test.mjs'])await fs.copyFile(path.join(project,'tests',file),path.join(scratch,'tests',file));
+for(const file of ['scene-v3.mjs','city-systems.mjs','traffic-v5.mjs','pedestrian-v5.mjs','story-v6.mjs','homes-v6.mjs','combat-v7.mjs','story-v8.mjs','hercules-v8.mjs','final-v9.mjs','world-v10.mjs','pixi-draw.mjs'])await fs.copyFile(path.join(project,'dist',file),path.join(scratch,'dist',file));
+for(const file of ['engine-v3.test.mjs','pixi-migration.test.mjs','combat-helpers.mjs'])await fs.copyFile(path.join(project,'tests',file),path.join(scratch,'tests',file));
 const original=await fs.readFile(path.join(project,'dist/engine-v3.mjs'),'utf8');
 const mutations=[
- ['civilian protection',"a.kind!=='civilian'&&(a.known||a.aggro)",'true&&(a.known||a.aggro)','engine-v3.test.mjs','sight identifies nearby targets'],
+ ['civilian protection',"a.kind==='boss'||a.kind==='enemy'","a.kind==='civilian'||a.kind==='boss'||a.kind==='enemy'",'engine-v3.test.mjs','sight identifies nearby targets'],
  ['countdown expiry','g.remaining-elapsed','g.remaining+elapsed','engine-v3.test.mjs','timer begins at 15 minutes'],
  ['solid obstruction','&&clearPath(a,p)','&&true','pixi-migration.test.mjs','attacks cannot pass through']
 ];
@@ -16,7 +16,8 @@ let caught=0;
 try{
  for(const [name,from,to,file,expected]of mutations){
   if(!original.includes(from))throw Error(`Mutation no longer matches: ${name}`);
-  await fs.writeFile(path.join(scratch,'dist/engine-v3.mjs'),original.replace(from,to));
+  const mutated=name==='solid obstruction'?original.replaceAll('&&clearPath(a,p)','&&true').replace('!clearPath(target,p)','false'):original.replace(from,to);
+  await fs.writeFile(path.join(scratch,'dist/engine-v3.mjs'),mutated);
   const result=spawnSync(process.execPath,['--test','--test-reporter=spec',path.join(scratch,'tests',file)],{encoding:'utf8'});
   const output=result.stdout+result.stderr;
   if(result.status===0||!output.includes(expected)||!output.includes('AssertionError'))throw Error(`Mutation was not caught by an assertion: ${name}\n${output}`);
