@@ -1,7 +1,7 @@
-# State — 2026-10-22
+# State — 2026-10-22 (after publication)
 
 ## Current goal
-Stalls, concealed identities, companion combat, pause UI, Sumon note, water bubble and building redesign implemented, tested and exported; live device verification pending.
+Live site now serves the v4–v12 integrations at https://pushpo.pages.dev; live device verification still pending; awaiting next direction.
 
 ## Done since last session
 - Added six integration regressions: `outputs/pushpo-demo/tests/integration-v12.test.mjs`; preserved earlier simulation/story/traffic coverage.
@@ -29,5 +29,5 @@ Stalls, concealed identities, companion combat, pause UI, Sumon note, water bubb
 - New city crops: `dist/art-v3.mjs`; ground anchors: `dist/environment-v5.mjs`; asset lists must match `work/export-demo.mjs`.
 - Machete contact state: `dist/final-v9.mjs`; shared pose: `dist/combat-v7.mjs`. Cosmetic Mirror dissolve must never extend protection.
 - Existing road layout, 180 NPCs, 14 moving rickshaws, three bosses, Hercules/final rescue and story progression retained.
-- Preserve concurrent publication/Git work. No commit, push or deployment in this update; hosting facts live in README.
+- Publication: commit `ea4600a` (135 files) pushed to `origin/main`, Pages build `0295c816` deployed; serving verified (`boulevards-v11.mjs`, Hercules ally HUD present). Every pushed change auto-deploys, so run relevant checks before pushing.
 - Static review helper: `work/render-v12.mjs`. Read AGENTS for commands; never run `work/prepare-v3.mjs`.
